@@ -1,0 +1,12 @@
+<include href="{{ @header }}" />
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 col-8 center-form">
+      {{ @form->create_form('Username|text, Password|password, Re-enter Password|password, Database Name|text') }}
+    </div>
+  </div>
+</div>
+
+
+<include href="{{ @footer }}" />

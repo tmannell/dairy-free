@@ -1,0 +1,17 @@
+<include href="{{ @header }}" />
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-center">
+      Editing user <strong>{{ @viewed_user_id }}</strong>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-8 center-form">
+      {{ @form->create_form('Username|text, Password|password, Re-enter Password|password') }}
+    </div>
+  </div>
+</div>
+
+
+<include href="{{ @footer }}" />

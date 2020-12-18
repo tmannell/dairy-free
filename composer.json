@@ -1,0 +1,28 @@
+{
+    "require": {
+        "bcosca/fatfree-core": "^3.7",
+        "twbs/bootstrap": "^4.0",
+        "components/jquery": "^3.2",
+        "components/font-awesome": "^4.7",
+        "xfra35/f3-access": "^1.0",
+        "formr/formr": "^1.2"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "ln -sf ../../../vendor/twbs/bootstrap/dist/css/bootstrap.min.css web/assets/css/bootstrap.min.css",
+            "ln -sf ../../../vendor/twbs/bootstrap/dist/js/bootstrap.min.js web/assets/js/bootstrap.min.js",
+            "ln -sf ../../../vendor/twbs/bootstrap/dist/css/bootstrap.min.css.map web/assets/css/bootstrap.min.css.map",
+            "ln -sf ../../../vendor/twbs/bootstrap/dist/js/bootstrap.min.js.map web/assets/js/bootstrap.min.js.map",
+            "ln -sf ../../../vendor/components/jquery/jquery.min.js web/assets/js/jquery.min.js",
+            "ln -sf ../../../vendor/components/font-awesome/css/font-awesome.min.css web/assets/css/font-awesome.min.css"
+        ],
+	"post-update-cmd": [
+            "ln -sf ../../../vendor/twbs/bootstrap/dist/css/bootstrap.min.css web/assets/css/bootstrap.min.css",
+            "ln -sf ../../../vendor/twbs/bootstrap/dist/js/bootstrap.min.js web/assets/js/bootstrap.min.js",
+            "ln -sf ../../../vendor/twbs/bootstrap/dist/js/bootstrap.min.css.map web/assets/css/bootstrap.min.css.map",
+            "ln -sf ../../../vendor/twbs/bootstrap/dist/js/bootstrap.min.js.map web/assets/js/bootstrap.min.js.map",
+            "ln -sf ../../../vendor/components/jquery/jquery.min.js web/assets/js/jquery.min.js",
+            "ln -sf ../../../vendor/components/font-awesome/css/font-awesome.css web/assets/css/font-awesome.min.css"
+        ]
+    }
+}

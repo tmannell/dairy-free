@@ -1,0 +1,167 @@
+a:link {color:black;text-decoration: none;}      /* unvisited link */
+a:visited {color:black;text-decoration: none;}  /* visited link */
+a:hover {color:grey;text-decoration: none;}  /* mouse over link */
+a:active {color:black;text-decoration: none;}  /* selected link */
+
+a.img:link {color:#FFFFFF;}      /* unvisited link */
+a.img:visited {color:#FFFFFF;}  /* visited link */
+a.img:hover {color:#FFFFFF;}  /* mouse over link */
+a.img:active {color:#FFFFFF;}  /* selected link */
+
+#name{
+  width: 320px;
+  height: 100px;
+}
+
+#radio{
+  margin-left:px;
+}
+
+input{
+color: #ccc;
+}
+
+/* Add page form */
+
+fieldset{
+	border: 1px solid #ccc !important;
+	margin: 20px auto !important;
+	border-radius: 4px !important;
+	padding: 20px !important;
+}
+
+.form-header {
+	margin-bottom: 15px;
+	color: #a4a4a4;
+}
+
+#page-link,
+input[name="page_media"] {
+	display: none;
+}
+
+/* End of add page form */
+
+.center-form {
+	margin: 25px auto 50px;
+}
+
+.center-margin {
+	margin: 0 auto;
+}
+
+/*end of form rules*/
+
+/* View User */
+.user-option {
+	margin: 5px 0;
+	color: #fff !important;
+	background-color: grey !important;
+	border-color: grey !important;
+}
+
+.user-option:hover {
+	background-color: #949494 !important;
+	border-color: #949494 !important;
+}
+/* End of view user */
+
+/* Content view page */
+.content-list a {
+	color: #791b79;
+}
+
+#header
+{
+	margin:0 auto 50px;
+	display:block;
+	text-align:center;
+}
+
+body
+{
+	background-color:white;
+}
+
+#picture
+{
+	margin: 10px 0;
+	display:block;
+}
+
+#title
+{
+	margin:20px auto 57px;
+	display:block;
+	text-align:center;
+}
+
+#title div {
+	width: 450px;
+	margin: 0 auto;
+}
+
+
+
+#action-items
+{
+	margin-bottom:75px;
+	font-size:12px;
+	color:grey;
+}
+
+#footer {
+	font-size: 11px;
+	padding: 0px 0px 10px 10px;
+	position: absolute;
+}
+
+#date{
+	margin-bottom: 14px;
+}
+
+#audio-player{
+	display: none;
+	margin: -42px auto 20px;
+	text-align: center;
+	width: 156px;
+}
+
+
+#first,
+#previous,
+#next,
+#last,
+#link,
+#listen,
+#random
+{
+	text-align:center;
+	display:block;
+}
+
+#media-col,
+#random-col
+{
+	padding: 0 !important;
+}
+
+@media only screen and (max-width: 768px) {
+	#first,
+	#previous,
+	#next,
+	#last {
+		margin-bottom: 25px;
+		opacity: .4;
+	}
+
+	.col-hide {
+		display: none !important;
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	#title div {
+		width: 100%;
+	}
+}

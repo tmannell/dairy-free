@@ -1,0 +1,72 @@
+<include href="{{ @header }}" />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-12 center-margin">
+      <table class="table table-striped content-list">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th class="col-hide" scope="col">Publish Date</th>
+            <th class="col-hide" scope="col">Created Date</th>
+            <th scope="col">Status</th>
+            <th class="col-hide" scope="col">Created By</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <repeat group="{{ @pages }}" key="{{ @pid }}" value="{{ @row }}" >
+            <tr>
+              <td><a href="/page/{{ @pid }}">{{ @row['title'] }}</a></td>
+              <td class="col-hide">{{ @row['publish_date'] }}</td>
+              <td class="col-hide">{{ @row['created_date'] }}</td>
+              <td>{{ @row['is_published'] }}</td>
+              <td class="col-hide"><a href="/user/{{ @row['user_id'] }}">{{ @row['username'] }}</a></td>
+              <td><a href="/page/{{ @pid }}/edit">Edit</a> <a href="/page/{{ @pid }}/delete">Delete</a></td>
+            </tr>
+          </repeat>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-12 center-margin">
+      <nav aria-label="Content List">
+        <ul class="pagination">
+          <check if="@position == 1">
+            <true>
+              <li class="page-item disabled"><a class="page-link" href="/admin/content/{{ @position - 1 }}"><<</a></li>
+            </true>
+            <false>
+              <li class="page-item"><a class="page-link" href="/admin/content/{{ @position - 1 }}"><<</a></li>
+            </false>
+          </check>
+          <loop from="{{ @i = 1 }}" to="{{ @i <= @page_count }}" step="{{ @i++ }}">
+            <check if="{{ @position == @i }}">
+              <true>
+                <li class="page-item active"><div class="page-link">{{ @i }}</div></li>
+              </true>
+              <false>
+                <li class="page-item"><a class="page-link" href="/admin/content/{{ @i }}">{{ @i }}</a></li>
+              </false>
+            </check>
+
+          </loop>
+          <check if="@position == @page_count">
+            <true>
+              <li class="page-item disabled"><a class="page-link" href="/admin/content/{{ @position + 1 }}">>></a></li>
+            </true>
+            <false>
+              <li class="page-item"><a class="page-link" href="/admin/content/{{ @position + 1 }}">>></a></li>
+            </false>
+          </check>
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<include href="{{ @footer }}" />
