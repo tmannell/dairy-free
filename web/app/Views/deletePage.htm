@@ -1,0 +1,26 @@
+<include href="{{ @header }}" />
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-center">
+      Are you sure you want to delete <em>{{ @page_title }}?</em>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-8 center-margin">
+      <form action="/page/{{ @page_id }}/delete" method="post" accept-charset="utf-8">
+        <button type="submit" name="submit" id="submit" class="user-option btn btn-primary btn-lg btn-block">
+          Delete Page
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-8 center-margin">
+      <a class="user-option btn btn-primary btn-lg btn-block" href="/page/{{ @page_id }}" role="button">Cancel</a>
+    </div>
+  </div>
+</div>
+
+
+<include href="{{ @footer }}" />

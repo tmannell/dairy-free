@@ -1,0 +1,17 @@
+<include href="{{ @header }}" />
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 col-8 center-form">
+      {{ @form->create_form('Username|text, Password|password') }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-8 center-form">
+      <a class="user-option btn btn-primary btn-lg btn-block" href="/user/1" role="button">Back to Admin</a>
+    </div>
+  </div>
+</div>
+
+
+<include href="{{ @footer }}" />

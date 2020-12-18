@@ -1,0 +1,111 @@
+<include href="{{ @header }}" />
+
+<div class="container-fluid">
+	<div class="row">
+
+		<div class="col-md-1 order-md-1 col-3 order-1">
+			<check if="{{ @pid != @first }}">
+				<true>
+					<a class="img" id="first" href="/page/{{ @first }}">
+						<img src="../../assets/images/first.jpg" alt="first">
+					</a>
+				</true>
+			</check>
+		</div>
+
+		<div class="col-md-1 order-md-2 col-3 order-2">
+			<check if="{{ @pid != @first }}">
+				<true>
+					<a class="img" id="previous" href="/page/{{ @previous }}">
+						<img src="../../assets/images/previous.jpg" alt="previous">
+					</a>
+				</true>
+			</check>
+		</div>
+
+		<div class="col-md-8 order-md-3 col-12 order-5">
+			<div id="picture" class="text-center">
+				<img class="img-fluid" src="../../assets/pictures/{{ @filename }}" />
+			</div>
+		</div>
+
+		<div class="col-md-1 order-md-4 col-3 order-3">
+			<check if="{{ @pid != @last }}">
+				<true>
+					<a class="img" id="next" href="/page/{{ @next }}">
+						<img src="../../assets/images/next.jpg" alt="next">
+					</a>
+				</true>
+			</check>
+		</div>
+
+		<div class="col-md-1 order-md-5 col-3 order-4">
+			<check if="{{ @pid != @last }}">
+				<true>
+					<a class="img" id="last" href="/page/{{ @last }}">
+						<img src="../../assets/images/last.jpg" alt="last">
+					</a>
+				</true>
+			</check>
+		</div>
+	</div>
+
+
+	<div class="row">
+			<div class="col-md-2 col-2" id="media-col">
+				<!-- if there's a media type for audio this happens -->
+				<check if="{{ @media_type == 'audio' }} ">
+					<true>
+						<div id="media_type">
+							<a class="img" id="listen" href="#listen">
+								<img src="../../assets/images/sound.jpg" alt="sound">
+							</a>
+						</div>
+					</true>
+				</check>
+
+				<check if="{{ @media_type == 'link' }}">
+					<true>
+						<div id="media-type">
+							<a class="img" id="link" href="{{ @media }}" target="_blank">
+								<img src="../../assets/images/visual.jpg" alt="visual">
+							</a>
+						</div>
+					</true>
+				</check>
+			</div>
+			<div class="col-md-8 col-8" id="title">
+				<div>{{ html_entity_decode( @title ) }}</div>
+			</div>
+		<div class="col-md-2 col-2" id="random-col">
+			<a class="img" id="random" href="/random">
+				<img src="../../assets/images/random.jpg" alt="random">
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-12 text-center d-block">
+			<check if="{{ @media_type == 'audio' }} ">
+				<true>
+					<div id="audio-player">
+						<audio src="../../assets/audio/{{ @media }}" />
+					</div>
+				</true>
+			</check>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid" id="action-items">
+	<div class="row">
+		<div class="col text-center">
+			<div id="date">{{ @page_date }}</div>
+			<a class="img" href="mailto:sickly@lactard.net">
+				<img src="../../assets/images/contact.jpg" alt="mailto">
+			</a>
+		</div>
+	</div>
+</div>
+
+<include href="{{ @footer }}" />
+	

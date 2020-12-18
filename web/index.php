@@ -1,0 +1,15 @@
+<?php
+
+require ('../vendor/autoload.php');
+$f3 = Base::instance();
+
+/*include config file and routes file*/
+$f3->config('../.env' );
+$f3->config('routes.ini');
+
+$main = new Main();
+$main->startSession();
+$main->userAccess();
+
+$f3->run();
+

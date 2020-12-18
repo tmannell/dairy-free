@@ -1,0 +1,40 @@
+<include href="{{ @header }}" />
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6 col-md-8 col-sm-12 col-12 center-form">
+      <form action="/page/add" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <fieldset>
+          <h4 class="form-header text-left">Content</h4>
+          {{ @form->textarea('page_title', 'Title') }}
+          {{ @form->file('page_image', 'Image File') }}
+          {{ @form->date('publish_date', 'Publish Date', @publish_date_default) }}
+          <div class="form-check">
+            <input type="checkbox" name="is_published" class="form-check-input" id="is-published" checked="checked">
+            <label class="form-check-label" for="is-published">Publish</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <h4 class="form-header text-left">Linked Media</h4>
+            {{ @form->select('media_type', 'Media Type', '', '', '', '', '', @media_options) }}
+            <div id="page-link">
+              {{ @form->label('page_link', 'Link') }}
+              {{ @form->text('page_link') }}
+            </div>
+            {{ @form->file('page_media') }}
+        </fieldset>
+        <fieldset>
+          <h4 class="form-header text-left">Tags</h4>
+            {{ @form->text('tags', 'Tags', '', '', '', 'Separate multiple tags with a comma.') }}
+        </fieldset>
+        <button type="submit" name="submit" id="submit" class="user-option btn btn-primary btn-lg btn-block">
+          Add page
+        </button>
+      </form>
+      <a class="user-option btn btn-primary btn-lg btn-block" href="/user/{{ @logged_user }}">Cancel</a>
+    </div>
+  </div>
+</div>
+
+
+<include href="{{ @footer }}" />
