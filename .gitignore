@@ -12,6 +12,7 @@
 web/favicon.ico
 web/robots.txt
 web/assets/comics/
+!web/assets/pictures
 web/assets/pictures/*
 web/assets/cufon-yui.js
 web/assets/font/
