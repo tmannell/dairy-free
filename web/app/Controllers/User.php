@@ -10,36 +10,15 @@ Class User extends Main {
    *  User Obj.
    */
   private $user;
-  /**
-   * @var \Validation
-   *  Validation Obj.
-   */
-  protected $validation;
 
   /**
    * UserController constructor.
    *
    * Inherits constructor from Controller class.
    */
-  function __construct() {
+  public function __construct() {
     parent::__construct();
-
-    // If we are not adding a new user lets load up the
-    // current user obj and store the uid in a separate var.
-    if (is_numeric(Helper::explodePath(2))) {
-
-      // Get the story identifier (id or short_title) from URL
-      $this->uid = Helper::explodePath(2);
-
-      // Load story obj based on identifier.
-      $this->user = new Users();
-      $this->user->load(['id = ?', $this->uid]);
-
-      // if the obj wasn't populated lets redirect to a 404.
-      if ($this->user->dry()) {
-        $this->f3->error(404);
-      }
-    }
+    $this->pathHandler();
   }
 
   /**
@@ -48,7 +27,7 @@ Class User extends Main {
    * Upon successful login adds session var (user id). We are using this var
    * to authorize users.
    */
-  function login() {
+  public function login() {
     // Reroute user to view user page is they are already logged in.
     $authStatus = $this->getAuthorizationStatus();
     if ($authStatus == 'authorized' || $authStatus == 'admin' ) {
@@ -93,7 +72,6 @@ Class User extends Main {
         $this->f3->set('SESSION.uid', $user->id);
         // Redirect user to their user page.
         $this->f3->reroute('/user/' . $user->id);
-
       }
     }
 
@@ -104,11 +82,8 @@ Class User extends Main {
 
   /**
    * Displays user page.
-   *
-   * Pulls all user data from the database and
-   * passes it to a smarty template.
    */
-  function view() {
+  public function view() {
     // Add vars to the template.
     $this->f3->set('header', 'app/Views/header.htm');
     $this->f3->set('username', $this->user->get('username'));
@@ -131,7 +106,7 @@ Class User extends Main {
   /**
    * Create add user form.
    */
-  function add() {
+  public function add() {
     // Build the add form.
     $form = new Formr\Formr('bootstrap');
     // All fields are required.
@@ -174,7 +149,7 @@ Class User extends Main {
   /**
    * Edit user form.
    */
-  function edit() {
+  public function edit() {
     // Build form.
     $form = new Formr\Formr('bootstrap');
     // All form fields are required.
@@ -207,7 +182,8 @@ Class User extends Main {
         $this->user->set('password', $this->cryptPassword($data['password']));
         $this->user->update();
         // Display success message.
-        $form->success_message('User <strong>' . $data['username'] . ' (' . $this->user->id . ')</strong> has been updated.');
+        // redirect to admin page with query string.
+        $this->f3->reroute('/user/' . $this->uid . '?updated=1');
       }
     }
 
@@ -252,7 +228,7 @@ Class User extends Main {
   /**
    * Logs user out by clearing uid in session var.
    */
-  function logout() {
+  public function logout() {
     // Clear the user out of the session.
     $this->f3->clear('SESSION.uid');
     $this->f3->reroute('/');
@@ -268,7 +244,7 @@ Class User extends Main {
    * @return string
    *  returns the password hash for storage in database.
    */
-  function cryptPassword($input, $cost = 7) {
+  public function cryptPassword($input, $cost = 7) {
     $salt = "";
     $salt_chars = array_merge(range('A','Z'), range('a','z'), range(0,9));
     for($i=0; $i < 22; $i++) {
@@ -288,13 +264,36 @@ Class User extends Main {
    *  returns password hash if correct otherwise returns false.
    *
    */
-  function authenticateUser($username, $password) {
+  public function authenticateUser($username, $password) {
     $db = $this->db;
     $result = $db->exec('SELECT * FROM users WHERE username = ?', [1 => $username]);
-    if(crypt($password, $result[0]['password']) == $result[0]['password']) {
+    if(crypt($password, $result[0]['password']) === $result[0]['password']) {
       return $result[0]['password'];
-    } else {
+    }
+    else {
       return false;
     }
   }
+
+  /**
+   * The user path handler, decides what to do based on url
+   * arguments.
+   */
+  protected function pathHandler() {
+    $args = Helper::explodePath();
+    // If we are not adding a new user lets load up the
+    // current user obj and store the uid in a separate var.
+    if (is_numeric($args[2]) && strtolower($args[1]) === 'user') {
+
+      // Get the user id from URL
+      $this->uid = $args[2];
+
+      // Load story obj based on identifier.
+      $this->user = new Users();
+      $this->user->load(['id = ?', $this->uid]);
+      // Throw a 404 if we can't find a user.
+      Helper::throw404($this->user->dry());
+    }
+  }
+
 }

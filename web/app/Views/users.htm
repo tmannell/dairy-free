@@ -1,0 +1,72 @@
+<include href="{{ @header }}" />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-12 center-margin">
+      <table class="table table-striped content-list">
+        <thead>
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <repeat group="{{ @users }}" key="{{ @id }}" value="{{ @row }}" >
+            <tr>
+              <td>{{ @id }}</td>
+              <td><a href="/user/{{ @id }}">{{ @row['username'] }}</a></td>
+              <td><a href="/user/{{ @id }}/edit">Edit</a>
+                <check if="{{@id === 1}}">
+                  <false>
+                    <a href="/user/{{ @id }}/delete">Delete</a>
+                  </false>
+                </check>
+              </td>
+            </tr>
+          </repeat>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-12 center-margin">
+      <nav aria-label="Users List">
+        <ul class="pagination">
+          <check if="@position == 1">
+            <true>
+              <li class="page-item disabled"><a class="page-link" href="/admin/users/{{ @position - 1 }}"><<</a></li>
+            </true>
+            <false>
+              <li class="page-item"><a class="page-link" href="/admin/users/{{ @position - 1 }}"><<</a></li>
+            </false>
+          </check>
+          <loop from="{{ @i = 1 }}" to="{{ @i <= @page_count }}" step="{{ @i++ }}">
+            <check if="{{ @position == @i }}">
+              <true>
+                <li class="page-item active"><div class="page-link">{{ @i }}</div></li>
+              </true>
+              <false>
+                <li class="page-item"><a class="page-link" href="/admin/users/{{ @i }}">{{ @i }}</a></li>
+              </false>
+            </check>
+
+          </loop>
+          <check if="@position == @page_count">
+            <true>
+              <li class="page-item disabled"><a class="page-link" href="/admin/users/{{ @position + 1 }}">>></a></li>
+            </true>
+            <false>
+              <li class="page-item"><a class="page-link" href="/admin/users/{{ @position + 1 }}">>></a></li>
+            </false>
+          </check>
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<include href="{{ @footer }}" />

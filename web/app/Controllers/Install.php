@@ -9,9 +9,9 @@ class Install extends Main {
    * Checks install.
    *
    * Before anything is done this function is called
-   * to check if the databse has been installed already.
+   * to check if the database has been installed already.
    */
-  function installCheck() {
+  public function installCheck() {
     // Check if user table exists.
     $result = $this->db->exec("SHOW TABLES LIKE 'users'");
 
@@ -26,7 +26,8 @@ class Install extends Main {
   }
 
   /**
-   * The installation form, get data from admin user.
+   * The installation form, get install data from
+   * admin user.
    */
   public function installForm() {
     // Build the form.
@@ -76,7 +77,7 @@ class Install extends Main {
    *
    * @param $db_name
    */
-  function createDatabase($db_name) {
+  protected function createDatabase($db_name) {
 
     // Create the database.
     $this->db->begin();
