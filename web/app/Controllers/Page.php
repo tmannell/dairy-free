@@ -1,49 +1,38 @@
 <?php
 
+/**
+ * Class Page
+ */
 class Page extends Main {
 
+  /**
+   * @var
+   */
   protected $pid;
+
+  /**
+   * @var
+   */
   protected $page;
+
+  /**
+   * @var
+   */
   protected $pages;
 
+  /**
+   * Page constructor.
+   */
   public function __construct() {
     parent::__construct();
-
-    // Get path arguments.
-    $args = Helper::explodePath();
-    // Means we are doing something with a page.
-    if (is_numeric($args[2])) {
-      // Store page id from URL.
-      $this->pid = $args[2];
-      // Load the pages mapper.
-      $this->page = new Pages();
-    }
-
-    // Editing a page.
-    if (is_numeric($args[2]) && isset($args[3])
-        && (strtolower($args[3]) == 'edit' || strtolower($args[3] == 'delete')))
-    {
-      // Load up the current page, no extra filters.
-      $this->page->load(['pid = :pid', ':pid' => $this->pid]);
-    }
-    // Viewing a page.
-    elseif (is_numeric($args[2]) && !isset($args[3])) {
-      // Load only published pages.
-      $this->page->load(
-        ['pid = :pid AND is_published = :is_published',
-          ':pid' => $this->pid,
-          ':is_published' => 1,
-        ]);
-
-      // if the obj wasn't populated lets redirect to a 404.
-      if ($this->page->dry()) {
-        $this->f3->error(404);
-      }
-    }
+    $this->pathHandler();
   }
 
 
-  function home() {
+  /**
+   * If you are directed to the homepage, display a random page.
+   */
+  public function home() {
     $result = $this->db
       ->exec('SELECT id
               FROM pictures
@@ -53,13 +42,23 @@ class Page extends Main {
     $this->f3->reroute("/page/$page_id");
 	}
 
-  function newest() {
-    $this->f3->reroute('/' . $this->pages->last());
+  /**
+   * If you are directed to the 'newest' url, go to
+   * most recently created image.
+   */
+  public function newest() {
+    $this->f3->reroute('/page/' . $this->pages->last());
   }
 
-  function view() {
+  /**
+   * The view page callback.
+   *
+   * @throws \Exception
+   */
+  public function view() {
 
     // Set template variables.
+    $this->f3->set('path', '/page/');
     $this->f3->set('pid', $this->pid);
     $this->f3->set('first', $this->page->first());
     $this->f3->set('previous', $this->page->previous($this->page->get('created_date')));
@@ -82,7 +81,12 @@ class Page extends Main {
 		echo $template->render( 'app/Views/page.htm' );
 	}
 
-  function add() {
+  /**
+   * The add page form.
+   *
+   * @throws \Exception
+   */
+  public function add() {
     // Build Form
     $form = new Formr\Formr('bootstrap');
     // All fields are required.
@@ -107,7 +111,9 @@ class Page extends Main {
     $this->f3->set('media_options', $media_options);
     $this->f3->set('footer', 'app/Views/footer.htm');
 
+    // If the form has been submitted, handle it.
     if ($form->submitted()) {
+      // Get form values.
       $data = $form->validate('
         page_title, 
         page_image, 
@@ -128,9 +134,18 @@ class Page extends Main {
       }
 
       // Validate the submission.
-      $valid = $this->validateForm($form, $data, $files);
+      $valid = $this->validateForm($form, $data, $files, 'create');
       if ($valid === true) {
-        $this->saveSubmission($form, $data, $files);
+        // Save the submission.
+        $picture_id = $this->create($form, $data, $files);
+        // Creation successfull, redirect.
+        if ($picture_id) {
+          $form->success_message('Page added successfully.');
+          $this->f3->reroute('/page/' . $picture_id);
+        }
+
+        // Failed to create display error message.
+        $form->error_message('Failed create page.');
       }
     }
 
@@ -139,11 +154,16 @@ class Page extends Main {
     echo $template->render( 'app/Views/addPage.htm' );
   }
 
-  function edit() {
+  /**
+   * The edit page form.
+   *
+   * @throws \Exception
+   */
+  public function edit() {
     // Build Form
     $form = new Formr\Formr('bootstrap');
     // All fields are required.
-    $form->required = 'page_title, page_image, publish_date';
+    $form->required = 'page_title, publish_date, created_date';
     $form->required_indicator = ' * ';
     // Turn off Formr default upload behavior.
     $form->uploads = FALSE;
@@ -168,7 +188,9 @@ class Page extends Main {
     $this->f3->set('defaults', $defaults);
     $this->f3->set('footer', 'app/Views/footer.htm');
 
+    // If the form has been submitted process it.
     if ($form->submitted()) {
+      // Get form submission data.
       $data = $form->validate('
         page_title, 
         page_image, 
@@ -190,19 +212,30 @@ class Page extends Main {
       }
 
       // Validate the submission.
-      $valid = $this->validateForm($form, $data, $files);
+      $valid = $this->validateForm($form, $data, $files, 'update');
       if ($valid === true) {
-        $this->saveSubmission($form, $data, $files);
+        // Update the page.
+        $picture_id = $this->update($form, $data, $files);
+        // Update successfull, redirect.
+        if ($picture_id) {
+          $form->success_message('Page added successfully.');
+          $this->f3->reroute('/page/' . $picture_id);
+        }
+
+        // Not successful display error message
+        $form->error_message('Failed to update page.');
       }
     }
-
 
     // Print template.
     $template = new Template;
     echo $template->render( 'app/Views/editPage.htm' );
   }
 
-  function delete() {
+  /**
+   * The page deletion form.
+   */
+  public function delete() {
     // Build form.
     $form = new Formr\Formr('bootstrap');
     // Set the form action.
@@ -215,12 +248,10 @@ class Page extends Main {
 
     // If the form has been submitted.
     if ($form->submitted()) {
-        // Get the next page for redirection.
-        $next = $this->page->next();
         // Erase the page.
         $this->page->erase();
         // Redirect to admin page with query string.
-        $this->f3->reroute("/page/$next");
+        $this->f3->reroute("/admin/content");
     }
 
     // Print the template.
@@ -228,8 +259,15 @@ class Page extends Main {
     echo $template->render( 'app/Views/deletePage.htm' );
   }
 
+  /**
+   * Gather default values for edit form.
+   *
+   * @return array
+   * @throws \Exception
+   */
   protected function getDefaultValues() {
     $defaults = [];
+    // Gather defaults.
     $defaults['title'] = $this->page->get('title');
     $defaults['publish_date'] = $this->page->get('publish_date');
     $defaults['media_type'] = $this->page->get('media_type');
@@ -269,16 +307,31 @@ class Page extends Main {
     return $defaults;
   }
 
-  protected function validateForm($form, $data, $files) {
+  /**
+   * Validation for add and edit forms.
+   *
+   * @param $form
+   * @param $data
+   * @param $files
+   * @param $op
+   *
+   * @return bool
+   * @throws \Exception
+   */
+  protected function validateForm($form, $data, $files, $op) {
 
     // Validate file types.
-    if (!in_array($files['page_image']['type'], [
-      'image/jpeg',
-      'image/png',
-      'image/gif'
-    ])) {
-      $form->add_to_errors('page_image');
+    if ($op === 'create' || ($op === 'update' && isset($files['page_image']['name']))) {
+      if (!in_array($files['page_image']['type'], [
+        'image/jpeg',
+        'image/png',
+        'image/gif'
+      ])) {
+        $form->add_to_errors('page_image');
+      }
     }
+
+    // Media file type.
     if ($data['media_type'] === 'audio'
         && $files['page_media']['type'] !== 'audio/mpeg') {
 
@@ -334,35 +387,30 @@ class Page extends Main {
     return true;
   }
 
-  protected function saveSubmission($form, $data, $files) {
+  /**
+   * Creates a new page with add form submission.
+   *
+   * @param $form
+   * @param $data
+   * @param $files
+   *
+   * @return false
+   */
+  protected function create($form, $data, $files) {
     // Save the files before writing to the database.
 
-    // IMAGE FILE
-    // Modify file name to make it as unique as possible.
-    $img_filename = strtolower($files['page_image']['name']);
-    $img_filename = str_replace(' ', '_', $img_filename);
-    $hash = hash('crc32', rand(0, 10000000));
-    $img_filename = $hash . '__' . $img_filename;
-
-    // Save the image file.
-    if (!move_uploaded_file($files['page_image']['tmp_name'], '/app/web/assets/pictures/' . $img_filename)) {
+    $img_filename = $this->saveFile($files['page_image'], 'pictures');
+    if (!$img_filename) {
       $form->error_message('Failed to upload image file.');
-      return FALSE;
+      return false;
     }
 
-    // If there's an audio file.
-    if ($data['media_type'] === 'audio') {
-
-      // Modify the filename so it's as unique as possible.
-      $aud_filename = strtolower($files['page_media']['name']);
-      $aud_filename = str_replace(' ', '_', $aud_filename);
-      $hash     = hash('crc32', rand(0, 10000000));
-      $audio_filename = $hash . '__' . $aud_filename;
-
-      // Save the media file.
-      if (!move_uploaded_file($files['page_media']['tmp_name'], '/app/web/assets/audio/' . $audio_filename)) {
+    // Save audio file if necessary
+    if ($data['media_type'] === 'audio' && isset($files['page_media']['name'])) {
+      $audio_filename = $this->saveFile($files['page_media'], 'audio');
+      if (!$audio_filename) {
         $form->error_message('Failed to upload audio file.');
-        return FALSE;
+        return false;
       }
     }
 
@@ -372,22 +420,12 @@ class Page extends Main {
     // Process the checkbox values.
     $is_published = $data['is_published'] === 'on' ? 1 : 0;
 
-
-
     $picture = new Pictures();
     $picture->set('title', $data['page_title']);
     $picture->set('filename', $img_filename);
     $picture->set('publish_date', $data['publish_date']);
     $picture->set('is_published', $is_published);
     $picture->set('user_id', $this->f3->get('SESSION.uid'));
-
-    // Process created date.
-    if (isset($data['created_date'])) {
-      $date_obj = new DateTime($data['created_date']);
-      $created_date = $date_obj->format('Y-m-d H:i:s');
-      $picture->set('created_date', $created_date);
-    }
-
     $picture = $picture->save();
 
     // Now let's save the media entity.
@@ -401,17 +439,194 @@ class Page extends Main {
 
     // Save the tags to the database.
     if (trim($data['tags']) !== '') {
-      $tags = str_replace(' ', '', $data['tags']);
+      $tags = str_replace(' ', '', strtolower($data['tags']));
       $tags = explode(',', $tags);
+      $tags = array_unique($tags);
+
+      // Save the tags.
       foreach ($tags as $new_tag) {
         $tag = new Tags();
-        $tag->set('tag', strtolower($new_tag));
+        $tag->set('tag', $new_tag);
         $tag->set('picture_id', $picture->id);
         $tag->save();
       }
     }
 
-    $form->success_message('Page added successfully.');
-    $this->f3->reroute('/page/' . $picture->id);
+    // Return picture id if successful.
+    // Used in redirect.
+    return $picture->id;
   }
+
+  /**
+   * Updates a page with edit form submission.
+   *
+   * @param $form
+   * @param $data
+   * @param $files
+   *
+   * @return false
+   * @throws \Exception
+   */
+  protected function update($form, $data, $files) {
+    // Save the files before writing to the database.
+
+    // Save image file if necessary.
+    if (isset($files['page_image']['name'])) {
+      $img_filename = $this->saveFile($files['page_image'], 'pictures');
+      if (!$img_filename) {
+        $form->error_message('Failed to upload image file.');
+        return false;
+      }
+    }
+
+    // Save audio file if necessary
+    if ($data['media_type'] === 'audio' && isset($files['page_media']['name'])) {
+      $audio_filename = $this->saveFile($files['page_media'], 'audio');
+      if (!$audio_filename) {
+        $form->error_message('Failed to upload audio file.');
+        return false;
+      }
+    }
+
+    // Now lets update the entities to the database.
+    // First the picture.
+
+    // Load the picture that's being edited.
+    $picture_mapper = new Pictures();
+    $picture = $picture_mapper->load(['id = ?', $this->pid]);
+
+    // If it can't find the picture return false.
+    if (!$picture) {
+      return false;
+    }
+
+    $picture->set('title', $data['page_title']);
+    $picture->set('publish_date', $data['publish_date']);
+    $picture->set('user_id', $this->f3->get('SESSION.uid'));
+
+    // Handle the image
+    if (isset($img_filename)) {
+      $picture->set('filename', $img_filename);
+    }
+
+    // Process the checkbox values.
+    $is_published = $data['is_published'] === 'on' ? 1 : 0;
+    $picture->set('is_published', $is_published);
+
+    // Process created date.
+    $date_obj = new DateTime($data['created_date']);
+    $created_date = $date_obj->format('Y-m-d H:i:s');
+    $picture->set('created_date', $created_date);
+    $picture = $picture->save();
+
+    $media_mapper = new Media();
+    $media = $media_mapper->load(['picture_id = ?', $this->pid]);
+
+    // If we can't find the media return false;
+    if (!$media) {
+      return false;
+    }
+
+    $media->set('media_type', $data['media_type']);
+
+    // Now let's save the media entity.
+    if ($data['media_type'] === 'link') {
+      $media->set('media', $data['page_link']);
+    }
+    elseif($data['media_type'] === 'audio' && isset($audio_filename)) {
+      $media->set('media', $audio_filename);
+    }
+
+    $media->set('picture_id', $picture->id);
+    $media->save();
+
+    // Save the tags to the database.
+    if (trim($data['tags']) !== '') {
+      $tags = str_replace(' ', '', strtolower($data['tags']));
+      $tags = explode(',', $tags);
+      $tags = array_unique($tags);
+
+      // Remove any tags from the tags array that already exist
+      // for this picture in the database.
+      foreach ($tags as $key => $new_tag) {
+        $tag_mapper = new Tags();
+        $result = $tag_mapper->load(['tag = ? and picture_id = ?', $new_tag, $picture->id], ['limit' => 1]);
+        if ($result) {
+          unset($tags[$key]);
+        }
+      }
+
+      // Save the tags.
+      foreach ($tags as $new_tag) {
+        $tag = new Tags();
+        $tag->set('tag', $new_tag);
+        $tag->set('picture_id', $picture->id);
+        $tag->save();
+      }
+    }
+
+    // Returns picture id on successful update.
+    // Used in redirect.
+    return $picture->id;
+  }
+
+  /**
+   * Save a file upload!
+   *
+   * @param        $file
+   * @param string $dir
+   *
+   * @return false|string
+   */
+  protected function saveFile($file, $dir = 'pictures') {
+    // If a new file has been uploaded, modify file name to make it as unique
+    // as possible.
+    $img_filename = strtolower($file['name']);
+    $img_filename = str_replace(' ', '_', $img_filename);
+    $hash = hash('crc32', rand(0, 10000000));
+    $img_filename = $hash . '__' . $img_filename;
+
+    // Save the image file.
+    if (!move_uploaded_file($file['tmp_name'], "/app/web/assets/$dir/" . $img_filename)) {
+      return false;
+    }
+    return $img_filename;
+  }
+
+  /**
+   * The page path handler, decides what to do based on url
+   * arguments.
+   */
+  protected function pathHandler() {
+    // Get path arguments.
+    $args = Helper::explodePath();
+    // If argument two is numeric and argument one is 'page,
+    // we are doing something with a page.
+    if (is_numeric($args[2]) && strtolower($args[1]) === 'page') {
+      // Store page id from URL.
+      $this->pid = $args[2];
+      // Load the pages mapper.
+      $this->page = new Pages();
+
+      // Editing or deleting a page.
+      if (isset($args[3]) && (strtolower($args[3]) === 'edit' || strtolower($args[3]) === 'delete')) {
+        // Load up the current page, no extra filters.
+        $this->page->load(['pid = :pid', ':pid' => $this->pid]);
+        // Throw a 404 if we can't load the page id.
+        Helper::throw404($this->page->dry());
+      }
+      // Viewing a page.
+      elseif (is_numeric($args[2]) && !isset($args[3])) {
+        // Load only published pages.
+        $this->page->load(
+          ['pid = :pid AND is_published = :is_published',
+            ':pid' => $this->pid,
+            ':is_published' => 1,
+          ]);
+        // Throw a 404 if we can't load the page id.
+        Helper::throw404($this->page->dry());
+      }
+    }
+  }
+
 }

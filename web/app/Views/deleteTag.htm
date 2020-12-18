@@ -1,0 +1,26 @@
+<include href="{{ @header }}" />
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-center">
+      Are you sure you want to delete the tag: <em>{{ @tag_name }}?</em>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-8 center-margin">
+      <form action="/tag/{{ @tag_name }}/delete" method="post" accept-charset="utf-8">
+        <button type="submit" name="submit" id="submit" class="user-option btn btn-primary btn-lg btn-block">
+          Delete Tag
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-8 center-margin">
+      <a class="user-option btn btn-primary btn-lg btn-block" href="/admin/tags" role="button">Cancel</a>
+    </div>
+  </div>
+</div>
+
+
+<include href="{{ @footer }}" />

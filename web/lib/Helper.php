@@ -29,6 +29,12 @@ Class Helper extends Main {
     return $args;
   }
 
+  static function throw404($bool) {
+    if ($bool === true) {
+      Base::instance()->error(404);
+    }
+  }
+
   /**
    * Takes a file uploaded via a form, resizes it and saves it to appropriate directories.
    *

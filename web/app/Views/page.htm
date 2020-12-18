@@ -6,7 +6,7 @@
 		<div class="col-md-1 order-md-1 col-3 order-1">
 			<check if="{{ @pid != @first }}">
 				<true>
-					<a class="img" id="first" href="/page/{{ @first }}">
+					<a class="img" id="first" href="{{ @path }}{{ @first }}">
 						<img src="../../assets/images/first.jpg" alt="first">
 					</a>
 				</true>
@@ -16,7 +16,7 @@
 		<div class="col-md-1 order-md-2 col-3 order-2">
 			<check if="{{ @pid != @first }}">
 				<true>
-					<a class="img" id="previous" href="/page/{{ @previous }}">
+					<a class="img" id="previous" href="{{ @path }}{{ @previous }}">
 						<img src="../../assets/images/previous.jpg" alt="previous">
 					</a>
 				</true>
@@ -32,7 +32,7 @@
 		<div class="col-md-1 order-md-4 col-3 order-3">
 			<check if="{{ @pid != @last }}">
 				<true>
-					<a class="img" id="next" href="/page/{{ @next }}">
+					<a class="img" id="next" href="{{ @path }}{{ @next }}">
 						<img src="../../assets/images/next.jpg" alt="next">
 					</a>
 				</true>
@@ -42,7 +42,7 @@
 		<div class="col-md-1 order-md-5 col-3 order-4">
 			<check if="{{ @pid != @last }}">
 				<true>
-					<a class="img" id="last" href="/page/{{ @last }}">
+					<a class="img" id="last" href="{{ @path }}{{ @last }}">
 						<img src="../../assets/images/last.jpg" alt="last">
 					</a>
 				</true>

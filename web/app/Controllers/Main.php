@@ -16,15 +16,18 @@ class Main {
    */
   protected $db;
 
+  /**
+   * Current user id.
+   * @var
+   */
   protected $uid;
 
   /**
    * Controller constructor.
    *
    * Creates fat-free base instance and initial db connection.
-   * Sets specialized smarty configuration.
    *
-   * Controller class is our base class all other classes inherit.
+   * Main class is our base class, all other classes inherit.
    */
   public function __construct() {
     // Set up f3 base.
@@ -39,17 +42,8 @@ class Main {
   }
 
   /**
-   *  Do stuff before we route somewhere.
-   */
-  public function beforeroute() {}
-
-  /**
-   *  Do stuff after we route somewhere.
-   */
-  public function afterroute() {}
-
-  /**
    * Retrieves Authorization status.
+   *
    * @return string
    */
   public function getAuthorizationStatus() {
@@ -57,9 +51,8 @@ class Main {
     if ($uid == 1) {
       return 'admin';
     }
-    else {
-      return isset($uid) ? 'authorized' : 'anonymous';
-    }
+
+    return isset($uid) ? 'authorized' : 'anonymous';
   }
 
   /**
@@ -74,13 +67,13 @@ class Main {
       new \DB\SQL\Session($this->db, 'sessions', TRUE);
     }
     // Otherwise go to the install path.
-    elseif (empty($result) && $this->f3->get('PATH') != '/install') {
+    elseif (empty($result) && $this->f3->get('PATH') !== '/install') {
       $this->f3->reroute('/install');
     }
   }
 
   /**
-   * Check user access to all routes as defined in config.ini.
+   * Check user access to all routes as defined in .env.
    */
   public function userAccess() {
 
