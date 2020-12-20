@@ -24,18 +24,21 @@
   <link rel="stylesheet" type="text/css" media="all" href="/assets/css/font-awesome.min.css">
 </head>
   <body>
-    <check if ="{{ isset(@SESSION.uid) }}">
-      <true>
-        <include href="app/Views/adminBar.htm" />
-      </true>
-    </check>
-    <div id="header" class="container-fluid">
-      <include href="app/Views/statusMessage.htm" />
-      <div class="row">
-        <div class="col">
-          <a href="/">
-            <img class="img" src="/assets/images/banner.jpg" alt="banner">
-          </a>
+    <div class="d-flex flex-column min-vh-100">
+
+      <check if ="{{ isset(@SESSION.uid) }}">
+        <true>
+          <include href="app/Views/adminBar.htm" />
+        </true>
+      </check>
+      <div class="main flex-fill">
+      <div id="header" class="container-fluid">
+        <include href="app/Views/statusMessage.htm" />
+        <div class="row">
+          <div class="col">
+            <a href="/">
+              <img class="img" src="/assets/images/banner.jpg" alt="banner">
+            </a>
+          </div>
         </div>
       </div>
-    </div>
