@@ -1,12 +1,30 @@
-<include href="{{ @header }}" />
+<include href="app/Views/header.htm" />
 
 <div class="container-fluid">
   <div class="row">
+    <div class="col-12 text-center">
+      <div class="intro">
+        Install Dairy-Free..
+      </div>
+    </div>
     <div class="col-md-4 col-8 center-form">
-      {{ @form->create_form('Username|text, Password|password, Re-enter Password|password, Database Name|text') }}
+      {{ $form->open_multipart('install_form', 'install_form') }}
+      <fieldset>
+        {{ @form->text('username', 'Admin Username') }}
+        {{ @form->password('password', 'Password') }}
+        {{ @form->password('password2', 'Re-enter Password') }}
+        {{ @form->text('database_name', 'Database Name') }}
+      </fieldset>
+      <div class="row">
+        <div class="col-3">
+          <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block bg-light l-btn">
+            Install
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 
-<include href="{{ @footer }}" />
+<include href="app/Views/footer.htm" />

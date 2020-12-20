@@ -38,8 +38,15 @@ class Page extends Main {
               FROM pictures
               ORDER BY rand()
               LIMIT 1');
-    $page_id = $result[0]['id'];
-    $this->f3->reroute("/page/$page_id");
+    if (count($result) === 0) {
+      $template = new Template();
+      echo $template->render('app/Views/noContent.htm');
+    }
+    else {
+      print_r($result);
+      $page_id = $result[0]['id'];
+      $this->f3->reroute("/page/$page_id");
+    }
 	}
 
   /**
@@ -59,6 +66,7 @@ class Page extends Main {
 
     // Set template variables.
     $this->f3->set('path', '/page/');
+    $this->f3->set('view_page', $this->pid);
     $this->f3->set('pid', $this->pid);
     $this->f3->set('first', $this->page->first());
     $this->f3->set('previous', $this->page->previous($this->page->get('created_date')));
@@ -72,9 +80,6 @@ class Page extends Main {
     // Format the date for the template.
     $date = new DateTime($this->page->get('created_date'));
     $this->f3->set('page_date', $date->format('Y-m-d'));
-    // Add the footer and headers as vars.
-    $this->f3->set('header', 'app/Views/header.htm');
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // Render the template.
 		$template = new Template;
@@ -89,13 +94,13 @@ class Page extends Main {
   public function add() {
     // Build Form
     $form = new Formr\Formr('bootstrap');
+    // Set form action.
+    $form->action = '/page/add';
     // All fields are required.
     $form->required = 'page_title, page_image, publish_date';
     $form->required_indicator = ' * ';
     // Turn off Formr default upload behavior.
     $form->uploads = FALSE;
-    // Declare the forms action.
-    $form->action = '/user/add';
     // Declare media option types
     $media_options = [
       0 => '-- None --',
@@ -104,12 +109,10 @@ class Page extends Main {
     ];
 
     // Set template vars.
-    $this->f3->set('header', 'app/Views/header.htm');
     $this->f3->set('form', $form);
     $this->f3->set('logged_user', $this->f3->get('SESSION.uid'));
     $this->f3->set('publish_date_default', date('Y-m-d'));
     $this->f3->set('media_options', $media_options);
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // If the form has been submitted, handle it.
     if ($form->submitted()) {
@@ -141,7 +144,7 @@ class Page extends Main {
         // Creation successfull, redirect.
         if ($picture_id) {
           $form->success_message('Page added successfully.');
-          $this->f3->reroute('/page/' . $picture_id);
+          $this->f3->reroute('/page/' . $picture_id . '?addPage=1');
         }
 
         // Failed to create display error message.
@@ -162,14 +165,14 @@ class Page extends Main {
   public function edit() {
     // Build Form
     $form = new Formr\Formr('bootstrap');
+    // Set form action.
+    $form->action = '/page/' . $this->pid . '/edit';
     // All fields are required.
     $form->required = 'page_title, publish_date, created_date';
     $form->required_indicator = ' * ';
     // Turn off Formr default upload behavior.
     $form->uploads = FALSE;
-    // Declare the forms action.
-    $form->action = '/user/add';
-    // Declare media option types
+    // Declare media option types.
     $media_options = [
       0 => '-- None --',
       'link' => 'Link',
@@ -180,13 +183,11 @@ class Page extends Main {
     $defaults = $this->getDefaultValues();
 
     // Set template vars.
-    $this->f3->set('header', 'app/Views/header.htm');
     $this->f3->set('form', $form);
     $this->f3->set('pid', $this->pid);
     $this->f3->set('media_options', $media_options);
     $this->f3->set('logged_user', $this->f3->get('SESSION.uid'));
     $this->f3->set('defaults', $defaults);
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // If the form has been submitted process it.
     if ($form->submitted()) {
@@ -216,10 +217,10 @@ class Page extends Main {
       if ($valid === true) {
         // Update the page.
         $picture_id = $this->update($form, $data, $files);
-        // Update successfull, redirect.
+        // Update successful, redirect.
         if ($picture_id) {
           $form->success_message('Page added successfully.');
-          $this->f3->reroute('/page/' . $picture_id);
+          $this->f3->reroute('/page/' . $picture_id . '?editPage=1');
         }
 
         // Not successful display error message
@@ -241,17 +242,18 @@ class Page extends Main {
     // Set the form action.
     $form->action = '/page/' . $this->pid . '/delete';
     // Set template variables.
-    $this->f3->set('header', 'app/Views/header.htm');
+    $this->f3->set('form', $form);
     $this->f3->set('page_id', $this->pid);
     $this->f3->set('page_title', $this->page->get('title'));
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // If the form has been submitted.
     if ($form->submitted()) {
+        $picture = new Pictures();
+        $picture->load(['id = ?', $this->pid]);
         // Erase the page.
-        $this->page->erase();
+        $picture->erase();
         // Redirect to admin page with query string.
-        $this->f3->reroute("/admin/content");
+        $this->f3->reroute("/admin/content?deletePage=1");
     }
 
     // Print the template.
@@ -331,11 +333,15 @@ class Page extends Main {
       }
     }
 
-    // Media file type.
-    if ($data['media_type'] === 'audio'
-        && $files['page_media']['type'] !== 'audio/mpeg') {
+    // Only run this validation if the conditions are right.
+    if ($op == 'create' || $op === 'update' && isset($files['page_media']['name'])) {
+      // Media file type.
+      if ($data['media_type'] === 'audio'
+          && $files['page_media']['type'] !== 'audio/mpeg') {
 
-      $form->add_to_errors('page_media');
+        $form->add_to_errors('page_media');
+      }
+
     }
 
     // Validate dates.
@@ -351,9 +357,13 @@ class Page extends Main {
         $form->add_to_errors('link_empty');
       }
     }
-    if ($data['media_type'] === 'audio') {
-      if (trim($files['page_media']['name']) === '') {
-        $form->add_to_errors('audio_empty');
+
+    // Again only run this validation if the conditions are right.
+    if ($op == 'create' || $op === 'update' && isset($files['page_media']['name'])) {
+
+      // Has a file been uploaded?
+      if ($data['media_type'] === 'audio' && trim($files['page_media']['name']) === '') {
+          $form->add_to_errors('audio_empty');
       }
     }
 

@@ -1,17 +1,29 @@
-<include href="{{ @header }}" />
+<include href="app/Views/header.htm" />
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12 text-center">
-      Editing user <strong>{{ @viewed_user_id }}</strong>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-8 center-form">
-      {{ @form->create_form('Username|text, Password|password, Re-enter Password|password') }}
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12 center-form">
+      <div class="text-center">Editing user <strong>{{ @viewed_user_id }}</strong></div>
+      {{ @form->open_multipart('user_edit') }}
+      <fieldset>
+        {{ @form->text('username', 'Username', @viewed_username) }}
+        {{ @form->password('password', 'Password', '', '', '', 'You must change your password when editing a user.') }}
+        {{ @form->password('password2', 'Re-enter Password') }}
+      </fieldset>
+      <div class="row">
+        <div class="col-3">
+          <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block bg-light l-btn">
+            Save
+          </button>
+        </div>
+        <div class="col-4">
+          <a class="btn btn-primary btn-lg btn-block bg-light l-btn" href="/admin/users">Cancel</a>
+        </div>
+      </div>
+      {{ @form->close() }}
     </div>
   </div>
 </div>
 
 
-<include href="{{ @footer }}" />
+<include href="app/Views/footer.htm" />

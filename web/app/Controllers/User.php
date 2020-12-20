@@ -41,9 +41,7 @@ Class User extends Main {
     // Declare the forms action property.
     $form->action = '/login';
     // Set some vars for the template.
-    $this->f3->set('header', 'app/Views/header.htm');
     $this->f3->set('form', $form);
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // If the form has been submitted.
     if ($form->submitted()) {
@@ -84,19 +82,29 @@ Class User extends Main {
    * Displays user page.
    */
   public function view() {
+
+    // Get user's total page count.
+    $pages = new Pages();
+    $total_posts = $pages->count(['user_id = ?', $this->uid]);
+
+    $creation_date = 'Never!';
+    if ($total_posts > 0) {
+      // Latest creation date.
+      $pages->select('created_date', [
+        'limit' => 1,
+        'order' => 'creation_date desc'
+      ]);
+      $date = $pages->get('created_date');
+      $date_obj = new DateTime($date);
+      $creation_date = $date_obj->format('Y-m-d H:i');
+    }
+
     // Add vars to the template.
-    $this->f3->set('header', 'app/Views/header.htm');
     $this->f3->set('username', $this->user->get('username'));
     $this->f3->set('logged_user', $this->f3->get('SESSION.uid'));
     $this->f3->set('viewed_user', $this->uid);
-    $this->f3->set('footer', 'app/Views/footer.htm');
-
-    // This is for after user deletion only.  It prints
-    // a success message on the admin user page after user
-    // deletion.
-    if ($_GET['deleted'] == 1) {
-      $this->f3->set('deleted', 1);
-    }
+    $this->f3->set('total_posts', $total_posts);
+    $this->f3->set('latest', $creation_date);
 
     // Print the template.
     $template = new Template();
@@ -111,22 +119,26 @@ Class User extends Main {
     $form = new Formr\Formr('bootstrap');
     // All fields are required.
     $form->required = TRUE;
-    // Declare the forms action.
+    // Set form action
     $form->action = '/user/add';
     // Set template vars.
-    $this->f3->set('header', 'app/Views/header.htm');
     $this->f3->set('form', $form);
-    $this->f3->set('footer', 'app/Views/footer.htm');
+
 
     // If the form has been submitted.
     if ($form->submitted()) {
       // Get the submission data.
-      $data = $form->validate('Username, Password(min[8])');
+      $data = $form->validate('username, password(min[8]), password2(matches[password])');
 
       // Run validation.
       if ($form->errors()) {
+
         if ( $form->in_errors( 'password' ) ) {
           $form->error_message( 'Password must be a minimum of 8 characters' );
+        }
+
+        if ( $form->in_errors('password2')) {
+          $form->error_message( 'Passwords do not match.' );
         }
       }
       // If validation passes, process the submission.
@@ -138,6 +150,7 @@ Class User extends Main {
         $user->insert();
         // Display the success message.
         $form->success_message('User <strong>' . $data['username'] . ' (' . $user->id . ')</strong> has been created.');
+        $this->f3->reroute('/admin/users?addUser=1');
       }
     }
 
@@ -156,10 +169,10 @@ Class User extends Main {
     $form->required = TRUE;
     // Set the form action.
     $form->action = '/user/' . $this->uid . '/edit';
-    $this->f3->set('header', 'app/Views/header.htm');
-    $this->f3->set('viewed_user_id', $this->user->id);
+    // Template vars.
+    $this->f3->set('viewed_user_id', $this->user->get('id'));
+    $this->f3->set('viewed_username', $this->user->get('username'));
     $this->f3->set('form', $form);
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // If the form has been submitted.
     if ($form->submitted()) {
@@ -168,7 +181,7 @@ Class User extends Main {
 
       // Run the validation.
       if ($form->errors()) {
-        if ( $form->in_errors('re-enter_password')) {
+        if ( $form->in_errors('password2')) {
           $form->error_message( 'Passwords do not match.' );
         }
 
@@ -183,7 +196,7 @@ Class User extends Main {
         $this->user->update();
         // Display success message.
         // redirect to admin page with query string.
-        $this->f3->reroute('/user/' . $this->uid . '?updated=1');
+        $this->f3->reroute('/admin/users?editUser=1');
       }
     }
 
@@ -199,24 +212,24 @@ Class User extends Main {
   function delete() {
     // Build form.
     $form = new Formr\Formr('bootstrap');
-    // Set the form action.
-    $form->action = '/user/' . $this->uid . '/delete';
+    // Set form action.
+    $form->action = '/user/' . $this->user->get('id') . '/delete';
+
     // Set template variables.
-    $this->f3->set('header', 'app/Views/header.htm');
-    $this->f3->set('viewed_user_id', $this->user->id);
+    $this->f3->set('form', $form);
+    $this->f3->set('viewed_user_id', $this->user->get('id'));
     $this->f3->set('viewed_username', $this->user->get('username'));
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // If the form has been submitted.
     if ($form->submitted()) {
-      if ($this->user->id == 1) {
+      if ($this->user->get('id') == 1) {
         $form->error_message('Cannot delete the admin user.');
       }
       else {
         // Delete the user.
         $this->user->erase();
         // redirect to admin page with query string.
-        $this->f3->reroute('/user/1?deleted=1');
+        $this->f3->reroute('/user/1?deleteUser=1');
       }
     }
 

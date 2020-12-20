@@ -1,0 +1,56 @@
+<check if="{{ isset(@_GET['deleteUser']) && @_GET['deleteUser'] == 1 }}">
+  <true>
+    <div class="alert alert-warning" role="alert">
+      User deleted!
+    </div>
+  </true>
+</check>
+<check if="{{ isset(@_GET['addUser']) && @_GET['addUser'] == 1 }}">
+  <true>
+    <div class="alert alert-success" role="alert">
+      User added!
+    </div>
+  </true>
+</check>
+<check if="{{ isset(@_GET['editUser']) && @_GET['editUser'] == 1 }}">
+  <true>
+    <div class="alert alert-success" role="alert">
+      User updated!
+    </div>
+  </true>
+</check>
+<check if="{{ isset(@_GET['editTag']) && @_GET['editTag'] == 1 }}">
+  <true>
+    <div class="alert alert-success" role="alert">
+      Tag updated!
+    </div>
+  </true>
+</check>
+<check if="{{ isset(@_GET['deleteTag']) && @_GET['deleteTag'] == 1 }}">
+  <true>
+    <div class="alert alert-warning" role="alert">
+      Tag updated!
+    </div>
+  </true>
+</check>
+<check if="{{ isset(@_GET['addPage']) && @_GET['addPage'] == 1 }}">
+  <true>
+    <div class="alert alert-success" role="alert">
+      Page added!
+    </div>
+  </true>
+</check>
+<check if="{{ isset(@_GET['editPage']) && @_GET['editPage'] == 1 }}">
+  <true>
+    <div class="alert alert-success" role="alert">
+      Page updated!
+    </div>
+  </true>
+</check>
+<check if="{{ isset(@_GET['deletePage']) && @_GET['deletePage'] == 1 }}">
+  <true>
+    <div class="alert alert-warning" role="alert">
+      Page deleted!
+    </div>
+  </true>
+</check>

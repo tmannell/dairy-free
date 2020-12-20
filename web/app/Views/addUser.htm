@@ -1,17 +1,28 @@
-<include href="{{ @header }}" />
+<include href="app/Views/header.htm" />
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-4 col-8 center-form">
-      {{ @form->create_form('Username|text, Password|password') }}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-8 center-form">
-      <a class="user-option btn btn-primary btn-lg btn-block" href="/user/1" role="button">Back to Admin</a>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12 center-form">
+      {{ @form->open_multipart('add_user', 'add_user') }}
+      <fieldset>
+        {{ @form->text('username', 'Username') }}
+        {{ @form->password('password', 'Password') }}
+        {{ @form->password('password2', 'Re-enter password') }}
+      </fieldset>
+      <div class="row">
+        <div class="col-3">
+          <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block bg-light l-btn">
+            Save
+          </button>
+        </div>
+        <div class="col-4">
+          <a class="btn btn-primary btn-lg btn-block bg-light l-btn" href="/admin/users">Cancel</a>
+        </div>
+      </div>
+      {{ @form->close() }}
     </div>
   </div>
 </div>
 
 
-<include href="{{ @footer }}" />
+<include href="app/Views/footer.htm" />

@@ -17,13 +17,14 @@ Class Helper extends Main {
    */
   static function explodePath($key = null) {
     $f3 = \Base::instance();
+    $path = strtolower(($f3->get('PATH')));
     // If the key is null return all path components
     if (is_null($key)) {
-      $args = explode('/', $f3->get('PATH'));
+      $args = explode('/', $path);
     }
     // If key isn't null return the element of the path the key represents.
     else {
-      $args = explode('/', $f3->get('PATH'))[$key];
+      $args = explode('/', $path)[$key];
     }
 
     return $args;

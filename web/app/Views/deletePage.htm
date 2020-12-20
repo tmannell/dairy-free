@@ -1,26 +1,23 @@
-<include href="{{ @header }}" />
+<include href="app/Views/header.htm" />
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12 text-center">
-      Are you sure you want to delete <em>{{ @page_title }}?</em>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-8 center-margin">
-      <form action="/page/{{ @page_id }}/delete" method="post" accept-charset="utf-8">
-        <button type="submit" name="submit" id="submit" class="user-option btn btn-primary btn-lg btn-block">
-          Delete Page
-        </button>
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-8 center-margin">
-      <a class="user-option btn btn-primary btn-lg btn-block" href="/page/{{ @page_id }}" role="button">Cancel</a>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12 center-form">
+      <div class="intro text-center">Are you sure you want to this page: <strong>{{ @page_title }}</strong></div>
+      {{ @form->open_multipart('delete_page', 'delete_page') }}
+      <div class="row">
+        <div class="col-6">
+          <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block bg-light l-btn">
+            Delete
+          </button>
+        </div>
+        <div class="col-6">
+          <a class="btn btn-primary btn-lg btn-block bg-light l-btn" href="/admin/content">Cancel</a>
+        </div>
+      </div>
+      {{ @form->close() }}
     </div>
   </div>
 </div>
 
-
-<include href="{{ @footer }}" />
+<include href="app/Views/footer.htm" />
