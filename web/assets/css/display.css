@@ -1,27 +1,69 @@
-a:link {color:black;text-decoration: none;}      /* unvisited link */
-a:visited {color:black;text-decoration: none;}  /* visited link */
-a:hover {color:grey;text-decoration: none;}  /* mouse over link */
-a:active {color:black;text-decoration: none;}  /* selected link */
+/* globals */
 
-a.img:link {color:#FFFFFF;}      /* unvisited link */
-a.img:visited {color:#FFFFFF;}  /* visited link */
-a.img:hover {color:#FFFFFF;}  /* mouse over link */
-a.img:active {color:#FFFFFF;}  /* selected link */
+@font-face {
+	font-family: 'peacerfuldayregular';
+	src: url('../font/peacefulday-webfont.woff2') format('woff2'),
+	url('../font/peacefulday-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	font-size: 15px !important;
+	font-family: 'peacerfuldayregular', Arial, sans-serif !important;
+	font-weight:normal !important;
+	font-style:normal !important;
+	background-color: #FFF;
+}
+
+#l-paginator {
+	background-color: #f8f9fa;
+	color: #292929;
+	border-color: #dee2e6;
+}
+
+
+/* navbar */
+#admin-bar {
+	margin-bottom: 5px;
+}
+
+.edit-link {
+	margin-left: 25px;
+	margin-left: 25px;
+}
+
+.dropdown-item.active,
+.dropdown-item:active{
+	background-color: #f8f9fa !important;
+	color: #7a3b0e !important;
+}
+
+/* Footer */
+#footer {
+	position: relative;
+	width: 100%;
+	height: 270px;
+}
+
+#copyright {
+	position: absolute;
+	bottom: 20px;
+	font-size: 11px;
+	right: 20px
+}
+
 
 #name{
   width: 320px;
   height: 100px;
 }
 
-#radio{
-  margin-left:px;
-}
-
 input{
 color: #ccc;
 }
 
-/* Add page form */
+/* Forms */
 
 fieldset{
 	border: 1px solid #ccc !important;
@@ -40,6 +82,24 @@ input[name="page_media"] {
 	display: none;
 }
 
+.l-btn {
+	color: #292929 !important;
+	border-color: #dee2e6 !important;
+	margin: 5px 0;
+	font-size: 15px !important;
+}
+
+.form-text {
+	font-size: 14px !important;
+	color: #9a9999 !important;
+}
+
+.intro {
+	margin-bottom: 20px;
+	font-size: 17px;
+}
+
+
 /* End of add page form */
 
 .center-form {
@@ -49,26 +109,35 @@ input[name="page_media"] {
 .center-margin {
 	margin: 0 auto;
 }
-
 /*end of form rules*/
 
-/* View User */
-.user-option {
-	margin: 5px 0;
-	color: #fff !important;
-	background-color: grey !important;
-	border-color: grey !important;
-}
 
+/* user stuff */
 .user-option:hover {
 	background-color: #949494 !important;
 	border-color: #949494 !important;
 }
+
+#add-btn {
+	margin-bottom: 15px;
+}
+
+/* Password field*/
+#password,
+#username,
+#password2 {
+	font-family: Arial, sans-serif;
+	color: #292929;
+}
+
 /* End of view user */
 
+
+
 /* Content view page */
+
 .content-list a {
-	color: #791b79;
+	color: #7a3b0e;
 }
 
 #header
@@ -76,11 +145,6 @@ input[name="page_media"] {
 	margin:0 auto 50px;
 	display:block;
 	text-align:center;
-}
-
-body
-{
-	background-color:white;
 }
 
 #picture
@@ -102,18 +166,11 @@ body
 }
 
 
-
 #action-items
 {
 	margin-bottom:75px;
 	font-size:12px;
 	color:grey;
-}
-
-#footer {
-	font-size: 11px;
-	padding: 0px 0px 10px 10px;
-	position: absolute;
 }
 
 #date{

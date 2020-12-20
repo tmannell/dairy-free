@@ -1,65 +1,42 @@
-<include href="{{ @header }}" />
+<include href="app/Views/header.htm" />
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 col-12 text-center">
-      Welcome {{ @username }}!
+      <div class="intro">Welcome {{ @username }}!</div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 col-12 center-form">
-      <check if="{{ @logged_user == 1 && @viewed_user != 1 }}" >
-        <true>
-          <div class="row">
-            <div class="col-12">
-              <a class="user-option btn btn-primary btn-lg btn-block" href="/user/1" role="button">Back to Admin</a>
-            </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3 col-sm-10 col-10">
+          <div class="list-group">
+            <check if="{{@total_posts > 0}}">
+              <true>
+                <a href="/user/{{ @viewed_user }}/content" class="list-group-item list-group-item-action">View Pages</a>
+              </true>
+              <false>
+                <a href="/user/{{ @viewed_user }}/content" class="list-group-item list-group-item-action disabled">View Pages</a>
+              </false>
+            </check>
+            <check if="{{ @logged_user == 1 }}" >
+              <true>
+                <a href="/user/{{ @viewed_user }}/edit" class="list-group-item list-group-item-action">Edit User</a>
+                <check if="{{@logged_user !== 1}}">
+                  <true>
+                    <a href="/user/{{ @viewed_user }}/delete" class="list-group-item list-group-item-action">Delete User</a>
+                  </true>
+                </check>
+              </true>
+            </check>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <a class="user-option btn btn-primary btn-lg btn-block" href="/user/{{ @viewed_user }}/edit" role="button">Edit</a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <a id="delete-btn" class="user-option btn btn-primary btn-lg btn-block" href="/user/{{ @viewed_user }}/delete" role="button">Delete</a>
-            </div>
-          </div>
-        </true>
-      </check>
-      <check if="{{ @logged_user == @viewed_user }}">
-        <true>
-          <div class="row">
-            <div class="col-12">
-              <a class="user-option btn btn-primary btn-lg btn-block" href="/" role="button">Home</a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <a class="user-option btn btn-primary btn-lg btn-block" href="/page/add" role="button">Add Page</a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <check if="{{ @logged_user == 1 }}" >
-                <true>
-                  <a class="user-option btn btn-primary btn-lg btn-block" href="/user/add" role="button">Add User</a>
-                </true>
-              </check>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <a class="user-option btn btn-primary btn-lg btn-block" href="/pages/edit" role="button">Edit Pages</a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <a class="user-option btn btn-primary btn-lg btn-block" href="/logout" role="button">Logout</a>
-            </div>
-          </div>
-        </true>
-      </check>
+        </check>
     </div>
+    <div class="col-md-3 col-sm-10 col-10">
+        <ul class="list-group">
+          <li class="list-group-item">Total Posts: {{ @total_posts }}</li>
+          <li class="list-group-item">Last posted: {{ @latest }}</li>
+        </ul>
+    </div>
+    <div class="col-md-3"></div>
 
-<include href="{{ @footer }}" />
+<include href="app/Views/footer.htm" />

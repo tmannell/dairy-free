@@ -36,18 +36,16 @@ class Install extends Main {
     $form->required = TRUE;
     // Set the form action.
     $form->action = '/install';
-    $this->f3->set('header', 'app/Views/header.htm');
     $this->f3->set('form', $form);
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // If the form has been submitted.
     if ($form->submitted()) {
       // Get the submission data.
-      $data = $form->validate('Username, Password(min[8]), Re-enter Password(matches[password]), Database Name(min[3])');
+      $data = $form->validate('username, password(min[8]), password2(matches[password]), database_name(min[3])');
 
       // Validate the form.
       if ($form->errors()) {
-        if ( $form->in_errors('re-enter_password')) {
+        if ( $form->in_errors('password2')) {
           $form->error_message( 'Passwords do not match.' );
         }
 

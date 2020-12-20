@@ -46,10 +46,11 @@ class Tag extends Main {
     // Load the page.
     $pages = new Pages();
     $page = $pages->load(['pid = ?', $this->picture_id]);
-
+    $pid = $pages->get('pid');
     // Set template variables.
     $this->f3->set('path', '/group/' . $this->tag_name . '/');
-    $this->f3->set('pid', $page->get('pid'));
+    $this->f3->set('view_page', $pid);
+    $this->f3->set('pid', $pid);
     $this->f3->set('first', $pages->firstInGroup($this->tag_name));
     $this->f3->set('previous', $pages->previousInGroup($this->tag_name, $page->get('created_date')));
     $this->f3->set('next', $pages->forwardInGroup($this->tag_name, $page->get('created_date')));
@@ -62,9 +63,6 @@ class Tag extends Main {
     // Format the date for the template.
     $date = new DateTime($page->get('created_date'));
     $this->f3->set('page_date', $date->format('Y-m-d'));
-    // Add the footer and headers as vars.
-    $this->f3->set('header', 'app/Views/header.htm');
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // Render the template.
     $template = new Template;
@@ -84,10 +82,8 @@ class Tag extends Main {
     $form->required_indicator = ' * ';
 
     // Set template variables.
-    $this->f3->set('header', 'app/Views/header.htm');
     $this->f3->set('form', $form);
     $this->f3->set('tag_name', $this->tag_name);
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // If the form has been submitted.
     if ($form->submitted()) {
@@ -116,7 +112,7 @@ class Tag extends Main {
       }
 
       // Redirect to admin page with query string.
-      $this->f3->reroute("/admin/tags");
+      $this->f3->reroute("/admin/tags?editTag=1");
     }
 
     // Print the template.
@@ -133,9 +129,8 @@ class Tag extends Main {
     // Set the form action.
     $form->action = '/tag/' . $this->tag_name . '/delete';
     // Set template variables.
-    $this->f3->set('header', 'app/Views/header.htm');
+    $this->f3->set('form', $form);
     $this->f3->set('tag_name', $this->tag_name);
-    $this->f3->set('footer', 'app/Views/footer.htm');
 
     // If the form has been submitted.
     if ($form->submitted()) {
@@ -150,7 +145,7 @@ class Tag extends Main {
       }
 
       // Redirect to admin page with query string.
-      $this->f3->reroute("/admin/tags");
+      $this->f3->reroute("/admin/tags?deleteTag=1");
     }
 
     // Print the template.

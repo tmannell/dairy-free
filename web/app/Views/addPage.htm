@@ -1,9 +1,9 @@
-<include href="{{ @header }}" />
+<include href="app/Views/header.htm" />
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-6 col-md-8 col-sm-12 col-12 center-form">
-      <form action="/page/add" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+      {{ @form->open_multipart('add_page', 'add_page') }}
         <fieldset>
           <h4 class="form-header text-left">Content</h4>
           {{ @form->textarea('page_title', 'Title') }}
@@ -27,14 +27,20 @@
           <h4 class="form-header text-left">Tags</h4>
             {{ @form->text('tags', 'Tags', '', '', '', 'Separate multiple tags with a comma.') }}
         </fieldset>
-        <button type="submit" name="submit" id="submit" class="user-option btn btn-primary btn-lg btn-block">
-          Add page
-        </button>
-      </form>
-      <a class="user-option btn btn-primary btn-lg btn-block" href="/user/{{ @logged_user }}">Cancel</a>
+        <div class="row">
+          <div class="col-3">
+            <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block bg-light l-btn">
+              Save
+            </button>
+          </div>
+          <div class="col-3">
+            <a class="btn btn-primary btn-lg btn-block bg-light l-btn" href="/admin/content">Cancel</a>
+          </div>
+        </div>
+      {{ @form->close() }}
     </div>
   </div>
 </div>
 
 
-<include href="{{ @footer }}" />
+<include href="app/Views/footer.htm" />

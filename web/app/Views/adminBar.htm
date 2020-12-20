@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light" id="admin-bar">
+  <a class="navbar-brand " href="/"><img width="30" src="/assets/images/brand.jpg" alt="lactard"/></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#l-menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="l-menu">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="/admin/content" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Content
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/admin/content">Pages</a>
+          <a class="dropdown-item" href="/admin/tags">Tags</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/users">Users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/page/add">Add Page</a>
+      </li>
+      <li>
+        <check if="{{ isset(@view_page) }}">
+          <true>
+            <a class="nav-link edit-link" href="/page/{{ @view_page }}/edit">Edit Page</a>
+          </true>
+        </check>
+      </li>
+    </ul>
+
+    <div class="nav-item">
+      <a class="navbar-text text-right" href="/logout">Logout</a>
+    </div>
+  </div>
+</nav>

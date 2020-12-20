@@ -1,22 +1,26 @@
-<include href="{{ @header }}" />
+<include href="app/Views/header.htm" />
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12 text-center">
-      Editing tag <strong>{{ @tag_name }}</strong>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-8 center-form">
-      {{ @form->create_form('Tag Name|text') }}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-8 center-margin">
-      <a class="user-option btn btn-primary btn-lg btn-block" href="/admin/tags" role="button">Cancel</a>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12 center-form">
+      <div class="text-center">Editing tag: <strong>{{ @tag_name }}</strong></div>
+      {{ @form->open_multipart('edit_tag', 'edit_tag') }}
+      <fieldset>
+        {{ @form->text('tag_name', 'Tag Name', @tag_name) }}
+      </fieldset>
+      <div class="row">
+        <div class="col-3">
+          <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block bg-light l-btn">
+            Save
+          </button>
+        </div>
+        <div class="col-4">
+          <a class="btn btn-primary btn-lg btn-block bg-light l-btn" href="/admin/tags">Cancel</a>
+        </div>
+      </div>
+      {{ @form->close() }}
     </div>
   </div>
 </div>
 
-
-<include href="{{ @footer }}" />
+<include href="app/Views/footer.htm" />
