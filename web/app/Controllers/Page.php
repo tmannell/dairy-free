@@ -33,20 +33,14 @@ class Page extends Main {
    * If you are directed to the homepage, display a random page.
    */
   public function home() {
-    $result = $this->db
-      ->exec('SELECT id
-              FROM pictures
-              ORDER BY rand()
-              LIMIT 1');
-    if (count($result) === 0) {
-      $template = new Template();
-      echo $template->render('app/Views/noContent.htm');
-    }
-    else {
-      print_r($result);
-      $page_id = $result[0]['id'];
-      $this->f3->reroute("/page/$page_id");
-    }
+    $pages = new Pages();
+    $pid = $pages->randomPage();
+    // Throw an error if nothing is returned.
+    Helper::throw404($pid === null);
+
+    // Reroute to random page.
+    $this->f3->reroute("/page/$pid");
+
 	}
 
   /**
@@ -627,14 +621,30 @@ class Page extends Main {
       }
       // Viewing a page.
       elseif (is_numeric($args[2]) && !isset($args[3])) {
-        // Load only published pages.
-        $this->page->load(
-          ['pid = :pid AND is_published = :is_published',
+        // The queries for admins vs anonymous are different.
+        if (in_array($this->getAuthorizationStatus(), ['admin', 'authorized'], true)) {
+          // Lets load up all pages including unpublished ones.
+          $query = [
+            'pid = :pid',
+            ':pid' => $this->pid,
+          ];
+        }
+        else {
+          // Load only published pages for anonymous.
+          $query = [
+            'pid = :pid AND is_published = :is_published',
             ':pid' => $this->pid,
             ':is_published' => 1,
-          ]);
-        // Throw a 404 if we can't load the page id.
+          ];
+        }
+        $this->page->load($query);
+        // Throw a 404 if we can't find the page requested.
         Helper::throw404($this->page->dry());
+
+        // Set a the unpublished var for templates.
+        if ($this->page->get('is_published') == 0) {
+          $this->f3->set('unpublished', 1);
+        }
       }
     }
   }
