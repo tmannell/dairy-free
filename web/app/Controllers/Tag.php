@@ -43,25 +43,22 @@ class Tag extends Main {
    * @throws \Exception
    */
   public function groupView() {
-    // Load the page.
     $pages = new Pages();
-    $page = $pages->load(['pid = ?', $this->picture_id]);
-    $pid = $pages->get('pid');
     // Set template variables.
     $this->f3->set('path', '/group/' . $this->tag_name . '/');
-    $this->f3->set('view_page', $pid);
-    $this->f3->set('pid', $pid);
+    $this->f3->set('view_page', $this->picture_id);
+    $this->f3->set('pid', $this->picture_id);
     $this->f3->set('first', $pages->firstInGroup($this->tag_name));
-    $this->f3->set('previous', $pages->previousInGroup($this->tag_name, $page->get('created_date')));
-    $this->f3->set('next', $pages->forwardInGroup($this->tag_name, $page->get('created_date')));
+    $this->f3->set('previous', $pages->previousInGroup($this->tag_name, $this->page->get('created_date')));
+    $this->f3->set('next', $pages->forwardInGroup($this->tag_name, $this->page->get('created_date')));
     $this->f3->set('last', $pages->lastInGroup($this->tag_name));
-    $this->f3->set('filename', $page->get('filename'));
-    $this->f3->set('media_type', $page->get('media_type'));
-    $this->f3->set('media', $page->get('media'));
-    $this->f3->set('title', $page->get('title'));
+    $this->f3->set('media_type', $this->page->get('media_type'));
+    $this->f3->set('filename', $this->page->get('filename'));
+    $this->f3->set('title', $this->page->get('title'));
+    $this->f3->set('media', $this->page->get('media'));
 
     // Format the date for the template.
-    $date = new DateTime($page->get('created_date'));
+    $date = new DateTime($this->page->get('created_date'));
     $this->f3->set('page_date', $date->format('Y-m-d'));
 
     // Render the template.
@@ -168,19 +165,53 @@ class Tag extends Main {
       // If a page id is not present on the group path,
       // load the first page in the group.
       if (!isset($args[3])) {
+        // Load the first tag in the group.
         $tags->load(['tag = ?', $args[2]], ['order' => 'picture_id asc', 'limit' => 1]);
-        // Throw a 404 is no tag is found.
-        Helper::throw404($tags->dry());
+        // Load page mapper.
+        $this->page = new Pages();
+        // Find the page id of the first page in the group.
+        $pid = $this->page->firstInGroup($args[2]);
+        // Throw a 404 if a pid is not found.
+        Helper::throw404($pid === null);
+
+        // Load the full page obj.
+        $this->page->load(['pid = ?', $pid]);
+        // Throw a 404 is the page isn't loaded.
+        Helper::throw404($this->page->dry());
 
         // Store the tag name and picture id in class vars.
         $this->picture_id = $tags->get('picture_id');
         $this->tag_name = $tags->get('tag');
+
+        // Check if the page is unpublished and set a var.
+        if ($this->page->get('is_published') == 0) {
+          $this->f3->set('unpublished', 1);
+        }
       }
       // If a page id is present, lets load that specific page.
       elseif (is_numeric($args[3])) {
+        // Load the tag assigned to the picture id.
         $tags->load(['tag = ? and picture_id = ?', $args[2], $args[3]], ['limit' => 1]);
-        // Throw a 404 is no tag is found.
+        // Throw a 404 if no tag is found.
         Helper::throw404($tags->dry());
+
+        // Load the page mapper.
+        $this->page = new Pages();
+        // Load the page found in the tags query.
+        $this->page->load(['pid = ?', $tags->get('picture_id')]);
+        // Throw a 404 if no page is found.
+        Helper::throw404($this->page->dry());
+
+        // If the page is unpublished and the user is anonymous
+        // go to the next published page.
+        if ($this->page->get('is_published') == 0 && $this->getAuthorizationStatus() === 'anonymous') {
+          $this->page->forwardInGroup($args[2], $this->page->get('created_date'));
+        }
+
+        // Check if the page is unpublished and set a var, for templates.
+        if ($this->page->get('is_published') == 0) {
+          $this->f3->set('unpublished', 1);
+        }
 
         // Store the tag name and picture id in class vars.
         $this->picture_id = $tags->get('picture_id');

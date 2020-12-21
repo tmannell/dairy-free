@@ -7,6 +7,11 @@ $f3 = Base::instance();
 $f3->config('../.env' );
 $f3->config('routes.ini');
 
+// Sets custom 404 page.
+$f3->set('ONERROR',function(){
+  echo Template::instance()->render('app/Views/noContent.htm');
+});
+
 $main = new Main();
 $main->startSession();
 $main->userAccess();

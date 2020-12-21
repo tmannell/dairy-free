@@ -13,6 +13,13 @@ class Pages extends \DB\SQL\Mapper {
   protected $db;
 
   /**
+   * Where statement chunk.
+   *
+   * @var string
+   */
+  protected $is_published;
+
+  /**
    * Pages constructor.
    */
   public function __construct() {
@@ -26,6 +33,18 @@ class Pages extends \DB\SQL\Mapper {
       $f3->get('password')
     );
 
+    // Create a where statement chunk, whether a user can view published
+    // or unpublished pages differs between roles.
+    $main = new Main();
+    if (in_array($main->getAuthorizationStatus(), ['admin', 'authorized'], true)) {
+      // Find everything.
+      $this->is_published = 'is_published IS NOT NULL';
+    }
+    else {
+      // Find only published.
+      $this->is_published = 'is_published = 1';
+    }
+
     // Initiate the mapper.
     parent::__construct($this->db, 'pages');
   }
@@ -36,13 +55,13 @@ class Pages extends \DB\SQL\Mapper {
    * @return false|mixed
    */
   public function first() {
-    $result = $this->select('pid', ['is_published' => 1], [
+    $result = $this->select('pid', [$this->is_published], [
         'order' => 'pid asc',
         'limit' => 1
       ]
     );
 
-    return $result[0]['pid'];
+    return $result[0]['pid'] ?? null;
   }
 
   /**
@@ -58,14 +77,15 @@ class Pages extends \DB\SQL\Mapper {
       
         FROM tags t
             LEFT JOIN pictures p ON t.picture_id = p.id
+            
+        WHERE " . $this->is_published
 
-        WHERE p.is_published = 1
-            AND t.tag = :tag
+          . " AND t.tag = :tag
         
         ORDER BY p.created_date ASC LIMIT 1 
     ", [':tag' => $tag]);
 
-    return $result[0]['picture_id'];
+    return $result[0]['picture_id'] ?? null;
   }
 
   /**
@@ -74,13 +94,13 @@ class Pages extends \DB\SQL\Mapper {
    * @return false|mixed
    */
   public function last() {
-    $result = $this->select('pid', ['is_published' => 1], [
+    $result = $this->select('pid', [$this->is_published], [
         'order' => 'pid desc',
         'limit' => 1
       ]
     );
 
-    return $result[0]['pid'];
+    return $result[0]['pid'] ?? null;
   }
 
   /**
@@ -97,13 +117,14 @@ class Pages extends \DB\SQL\Mapper {
         FROM tags t
             LEFT JOIN pictures p ON t.picture_id = p.id
 
-        WHERE p.is_published = 1
-            AND t.tag = :tag
+        WHERE " . $this->is_published .
+
+            " AND t.tag = :tag
 
         ORDER BY p.created_date DESC LIMIT 1 
     ", [':tag' => $tag]);
 
-    return $result[0]['picture_id'];
+    return $result[0]['picture_id'] ?? null;
   }
 
   /**
@@ -120,14 +141,14 @@ class Pages extends \DB\SQL\Mapper {
       FROM pages 
       
       WHERE created_date > :created_date
-        AND is_published = 1
-      
-      ORDER BY created_date ASC
+        AND " . $this->is_published
+
+      . " ORDER BY created_date ASC
       
       LIMIT 1", [':created_date' => $created_date]
     );
 
-    return $result[0]['pid'];
+    return $result[0]['pid'] ?? null;
   }
 
   /**
@@ -146,7 +167,7 @@ class Pages extends \DB\SQL\Mapper {
             INNER JOIN tags t ON p.pid = t.picture_id
       
         WHERE created_date > :created_date
-            AND is_published = 1
+            AND " . $this->is_published . " 
             AND tag = :tag
         
         ORDER BY created_date ASC
@@ -154,7 +175,7 @@ class Pages extends \DB\SQL\Mapper {
         LIMIT 1", [':created_date' => $created_date, ':tag' => $tag]
     );
 
-    return $result[0]['pid'];
+    return $result[0]['pid'] ?? null;
   }
 
   /**
@@ -171,14 +192,14 @@ class Pages extends \DB\SQL\Mapper {
       FROM pages 
       
       WHERE created_date < :created_date
-        AND is_published = 1
+        AND " . $this->is_published . " 
       
       ORDER BY created_date DESC
       
       LIMIT 1", [':created_date' => $created_date]
     );
 
-    return $result[0]['pid'];
+    return $result[0]['pid'] ?? null;
   }
 
   /**
@@ -197,7 +218,7 @@ class Pages extends \DB\SQL\Mapper {
             INNER JOIN tags t ON p.pid = t.picture_id
       
         WHERE created_date < :created_date
-            AND is_published = 1
+            AND " . $this->is_published . " 
             AND tag = :tag
         
         ORDER BY created_date DESC
@@ -205,7 +226,27 @@ class Pages extends \DB\SQL\Mapper {
         LIMIT 1", [':created_date' => $created_date, ':tag' => $tag]
     );
 
-    return $result[0]['pid'];
+    return $result[0]['pid'] ?? null;
+  }
+
+  /**
+   * Gets a random page.
+   *
+   * @return mixed|null
+   */
+  public function randomPage() {
+    $result = $this->db
+      ->exec("SELECT id
+
+              FROM pictures
+              
+              WHERE ". $this->is_published . " 
+              
+              ORDER BY rand()
+              
+              LIMIT 1");
+
+    return $result[0]['id'] ?? null;
   }
 
 }
