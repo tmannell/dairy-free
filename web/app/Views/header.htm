@@ -3,6 +3,7 @@
   <head>
 
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
   <title>{{ @site_title }}</title>
 	
@@ -22,7 +23,7 @@
   <link rel="stylesheet" type="text/css" media="all" href="/assets/css/display.css">
   <link rel="stylesheet" type="text/css" media="all" href="/assets/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" media="all" href="/assets/css/font-awesome.min.css">
-</head>
+  </head>
   <body>
     <div class="d-flex flex-column min-vh-100">
 
@@ -34,11 +35,18 @@
       <div class="main flex-fill">
       <div id="header" class="container-fluid">
         <include href="app/Views/statusMessage.htm" />
-        <div class="row">
-          <div class="col">
-            <a href="/">
-              <img class="img" src="/assets/images/banner.jpg" alt="banner">
-            </a>
-          </div>
-        </div>
+
+        <check if ="{{ isset(@SESSION.uid) }}">
+          <false>
+            <include href="app/Views/navBar.htm" />
+          </false>
+        </check>
+
+<!--        <div class="row">-->
+<!--          <div class="col">-->
+<!--            <a href="/">-->
+<!--              <img class="img" src="/assets/images/banner.jpg" alt="banner">-->
+<!--            </a>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>

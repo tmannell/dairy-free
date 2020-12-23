@@ -19,7 +19,8 @@ web/assets/font/
 web/tmp/*
 vendor/
 .idea/
-.env
+config.ini
+cron.ini
 web/assets/css/bootstrap.min.css
 web/assets/css/bootstrap.min.css.map
 web/assets/css/font-awesome.min.css

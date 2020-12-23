@@ -620,7 +620,7 @@ class Page extends Main {
         Helper::throw404($this->page->dry());
       }
       // Viewing a page.
-      elseif (is_numeric($args[2]) && !isset($args[3])) {
+      else {
         // The queries for admins vs anonymous are different.
         if (in_array($this->getAuthorizationStatus(), ['admin', 'authorized'], true)) {
           // Lets load up all pages including unpublished ones.
@@ -642,7 +642,7 @@ class Page extends Main {
         Helper::throw404($this->page->dry());
 
         // Set a the unpublished var for templates.
-        if ($this->page->get('is_published') == 0) {
+        if ($this->page->get('is_published') === 0) {
           $this->f3->set('unpublished', 1);
         }
       }

@@ -69,6 +69,10 @@ input{
 color: #ccc;
 }
 
+.site-title .navbar-brand {
+	margin-right: auto !important;
+}
+
 /* Forms */
 
 fieldset{
@@ -136,14 +140,14 @@ input[name="page_media"] {
 	color: #292929;
 }
 
-/* End of view user */
+/* End of user */
 
 
 
 /* Content view page */
-
+.list-group-item-action,
 .content-list a {
-	color: #7a3b0e;
+	color: #7a3b0e !important;
 }
 
 #header
@@ -223,8 +227,16 @@ input[name="page_media"] {
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 767px) {
 	#title div {
 		width: 100%;
+	}
+
+	#header{
+		margin: 0 !important;
+	}
+
+	.post-info {
+		margin-top: 25px;
 	}
 }

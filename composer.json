@@ -5,7 +5,8 @@
         "components/jquery": "^3.2",
         "components/font-awesome": "^4.7",
         "xfra35/f3-access": "^1.0",
-        "formr/formr": "^1.2"
+        "formr/formr": "^1.2",
+        "xfra35/f3-cron": "^1.2"
     },
     "scripts": {
         "post-install-cmd": [
