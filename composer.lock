@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0c1e6165503d7882785d1c7d5e4d838",
+    "content-hash": "c863a8c6bbe3c90fc881ead9700d4d46",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -278,6 +278,47 @@
                 "source": "https://github.com/xfra35/f3-access/tree/v1.1.0"
             },
             "time": "2016-09-28T12:08:51+00:00"
+        },
+        {
+            "name": "xfra35/f3-cron",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xfra35/f3-cron.git",
+                "reference": "eba0a5574a8c35623307dd27135a67d76e4da12e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xfra35/f3-cron/zipball/eba0a5574a8c35623307dd27135a67d76e4da12e",
+                "reference": "eba0a5574a8c35623307dd27135a67d76e4da12e",
+                "shasum": ""
+            },
+            "require": {
+                "bcosca/fatfree-core": "~3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "description": "Job scheduling for the PHP Fat-Free Framework",
+            "homepage": "https://github.com/xfra35/f3-cron",
+            "keywords": [
+                "F3",
+                "cron",
+                "fatfree",
+                "scheduling"
+            ],
+            "support": {
+                "issues": "https://github.com/xfra35/f3-cron/issues",
+                "source": "https://github.com/xfra35/f3-cron/tree/v1.2.1"
+            },
+            "time": "2018-06-19T08:29:49+00:00"
         }
     ],
     "packages-dev": [],

@@ -73,7 +73,7 @@ class Main {
   }
 
   /**
-   * Check user access to all routes as defined in .env.
+   * Check user access to all routes as defined in config.ini.
    */
   public function userAccess() {
 
