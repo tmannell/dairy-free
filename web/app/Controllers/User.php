@@ -149,8 +149,10 @@ Class User extends Main {
         $user->set('password', $this->cryptPassword($data['password']));
         $user->insert();
         // Display the success message.
-        $form->success_message('User <strong>' . $data['username'] . ' (' . $user->id . ')</strong> has been created.');
-        $this->f3->reroute('/admin/users?addUser=1');
+        $this->f3->set('SESSION.message.type', 'alert-success');
+        $this->f3->set('SESSION.message.text', 'User ' . $data['username'] . ' (' . $user->id . ') has been created.');
+        // Reroute to admin page.
+        $this->f3->reroute('/admin/users');
       }
     }
 
@@ -194,9 +196,10 @@ Class User extends Main {
         $this->user->set('username', $data['username']);
         $this->user->set('password', $this->cryptPassword($data['password']));
         $this->user->update();
-        // Display success message.
-        // redirect to admin page with query string.
-        $this->f3->reroute('/admin/users?editUser=1');
+
+        $this->f3->set('SESSION.message.type', 'alert-success');
+        $this->f3->set('SESSION.message.text', 'User ' . $this->user->get('username') . ' (' . $this->user->get('id') . ') has been updated.');
+        $this->f3->reroute('/admin/users');
       }
     }
 
@@ -228,8 +231,11 @@ Class User extends Main {
       else {
         // Delete the user.
         $this->user->erase();
+
+        $this->f3->set('SESSION.message.type', 'alert-success');
+        $this->f3->set('SESSION.message.text', 'User ' . $this->user->get('username') . ' (' . $this->user->get('id') . ') has been deleted.');
         // redirect to admin page with query string.
-        $this->f3->reroute('/user/1?deleteUser=1');
+        $this->f3->reroute('/admin/users');
       }
     }
 

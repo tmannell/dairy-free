@@ -137,8 +137,11 @@ class Page extends Main {
         $picture_id = $this->create($form, $data, $files);
         // Creation successfull, redirect.
         if ($picture_id) {
-          $form->success_message('Page added successfully.');
-          $this->f3->reroute('/page/' . $picture_id . '?addPage=1');
+          // Set display message.
+          $this->f3->set('SESSION.message.type', 'alert-success');
+          $this->f3->set('SESSION.message.text', 'Page added successfully.');
+          // Reroute to page view.
+          $this->f3->reroute('/page/' . $picture_id);
         }
 
         // Failed to create display error message.
@@ -213,8 +216,11 @@ class Page extends Main {
         $picture_id = $this->update($form, $data, $files);
         // Update successful, redirect.
         if ($picture_id) {
-          $form->success_message('Page added successfully.');
-          $this->f3->reroute('/page/' . $picture_id . '?editPage=1');
+          // Set display message.
+          $this->f3->set('SESSION.message.type', 'alert-success');
+          $this->f3->set('SESSION.message.text', 'Page updated successfully.');
+          // Reroute to page view.
+          $this->f3->reroute('/page/' . $picture_id);
         }
 
         // Not successful display error message
@@ -246,8 +252,12 @@ class Page extends Main {
         $picture->load(['id = ?', $this->pid]);
         // Erase the page.
         $picture->erase();
-        // Redirect to admin page with query string.
-        $this->f3->reroute("/admin/content?deletePage=1");
+
+        // Set display message.
+        $this->f3->set('SESSION.message.type', 'alert-warning');
+        $this->f3->set('SESSION.message.text', 'Page deleted successfully.');
+        // Redirect to admin page.
+        $this->f3->reroute("/admin/content");
     }
 
     // Print the template.
