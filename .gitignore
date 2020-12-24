@@ -20,7 +20,7 @@ web/tmp/*
 vendor/
 .idea/
 config.ini
-cron.ini
+web/cron.log
 web/assets/css/bootstrap.min.css
 web/assets/css/bootstrap.min.css.map
 web/assets/css/font-awesome.min.css

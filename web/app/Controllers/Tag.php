@@ -108,6 +108,9 @@ class Tag extends Main {
         }
       }
 
+      // Set display message
+      $this->f3->set('SESSION.message.type', 'alert-success');
+      $this->f3->set('SESSION.message.text', 'Tag updated successfully.');
       // Redirect to admin page with query string.
       $this->f3->reroute("/admin/tags?editTag=1");
     }
@@ -141,8 +144,11 @@ class Tag extends Main {
         $this->tags->next();
       }
 
-      // Redirect to admin page with query string.
-      $this->f3->reroute("/admin/tags?deleteTag=1");
+      // Set display message
+      $this->f3->set('SESSION.message.type', 'alert-warning');
+      $this->f3->set('SESSION.message.text', 'Tag deleted successfully.');
+      // Redirect to admin page.
+      $this->f3->reroute("/admin/tags");
     }
 
     // Print the template.

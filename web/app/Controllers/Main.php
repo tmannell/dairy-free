@@ -42,6 +42,14 @@ class Main {
   }
 
   /**
+   *  Do stuff after we route somewhere.
+   */
+  public function afterroute() {
+    // Clear SESSION.<msg>
+    $this->f3->clear('SESSION.message');
+  }
+
+  /**
    * Retrieves Authorization status.
    *
    * @return string
