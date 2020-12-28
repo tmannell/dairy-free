@@ -1,7 +1,7 @@
 /* globals */
 
 a:active {
-	color: #7a3b0e !important;
+	color: #4e3623 !important;
 	text-decoration: none !important;
 }
 
@@ -9,17 +9,9 @@ a:hover {
 	text-decoration: none !important;
 }
 
-@font-face {
-	font-family: 'peacerfuldayregular';
-	src: url('../font/peacefulday-webfont.woff2') format('woff2'),
-	url('../font/peacefulday-webfont.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
 body {
-	font-size: 15px !important;
-	font-family: 'peacerfuldayregular', Arial, sans-serif !important;
+	font-size: 19px !important;
+	font-family: 'Neucha', cursive !important;
 	font-weight:normal !important;
 	font-style:normal !important;
 	background-color: #FFF;
@@ -30,6 +22,14 @@ body {
 	background-color: #f8f9fa;
 	color: #292929;
 	border-color: #dee2e6;
+}
+
+.l-navbar {
+	background-color: #67a557 !important;
+}
+
+.btn-light, .bg-light {
+	background-color: #67a557 !important;
 }
 
 
@@ -43,10 +43,15 @@ body {
 	margin-left: 25px;
 }
 
+.navbar-text,
+.nav-link {
+	color: #4e3623 !important;
+}
+
 .dropdown-item.active,
 .dropdown-item:active{
 	background-color: #f8f9fa !important;
-	color: #7a3b0e !important;
+	color: #67a557 !important;
 }
 
 /* Footer */
@@ -93,7 +98,7 @@ input[name="page_media"] {
 }
 
 .l-btn {
-	color: #292929 !important;
+	color: #4e3623 !important;
 	border-color: #dee2e6 !important;
 	margin: 5px 0;
 	font-size: 15px !important;
@@ -107,6 +112,12 @@ input[name="page_media"] {
 .intro {
 	margin-bottom: 20px;
 	font-size: 17px;
+}
+
+button.bg-light:hover,
+a.bg-light:hover {
+	background-color: #9cea85 !important;
+	color: #000 !important;
 }
 
 
@@ -180,7 +191,7 @@ input[name="page_media"] {
 {
 	margin-bottom:75px;
 	font-size:12px;
-	color:grey;
+	color:#4e3623;
 }
 
 #date{
