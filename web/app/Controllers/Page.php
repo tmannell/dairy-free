@@ -57,9 +57,13 @@ class Page extends Main {
    * @throws \Exception
    */
   public function view() {
+    // Get total page count.
+    $pages_mapper = new Pages();
+    $count = $pages_mapper->totalPages();
 
     // Set template variables.
     $this->f3->set('path', '/page/');
+    $this->f3->set('count', $count);
     $this->f3->set('view_page', $this->pid);
     $this->f3->set('pid', $this->pid);
     $this->f3->set('first', $this->page->first());

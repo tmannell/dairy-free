@@ -249,4 +249,15 @@ class Pages extends \DB\SQL\Mapper {
     return $result[0]['id'] ?? null;
   }
 
+  /**
+   * Returns total pages.
+   *
+   * Will return only published for anonymous users.
+   *
+   * @return int
+   */
+  public function totalPages() {
+    return $this->count([$this->is_published]);
+  }
+
 }
