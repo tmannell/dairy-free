@@ -601,7 +601,7 @@ class Page extends Main {
     $img_filename = $hash . '__' . $img_filename;
 
     // Save the image file.
-    if (!move_uploaded_file($file['tmp_name'], "/app/web/assets/$dir/" . $img_filename)) {
+    if (!move_uploaded_file($file['tmp_name'], "assets/$dir/" . $img_filename)) {
       return false;
     }
     return $img_filename;
