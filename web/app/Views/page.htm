@@ -77,15 +77,16 @@
 			<div class="col-md-8 col-8" id="title">
 				<div>{{ html_entity_decode( @title ) }}</div>
 			</div>
-			<check if="{{ @count > 1 }}" >
-				<true>
-					<div class="col-md-2 col-2" id="random-col">
+
+			<div class="col-md-2 col-2" id="random-col">
+				<check if="{{ @count > 1 }}" >
+					<true>
 						<a class="img" id="random" href="/random">
 							<img src="/assets/images/random.png" alt="random">
 						</a>
-					</div>
-				</true>
-			</check>
+					</true>
+				</check>
+			</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12 col-12 text-center d-block">
