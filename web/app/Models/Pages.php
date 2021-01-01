@@ -56,7 +56,7 @@ class Pages extends \DB\SQL\Mapper {
    */
   public function first() {
     $result = $this->select('pid', [$this->is_published], [
-        'order' => 'pid asc',
+        'order' => 'created_date asc',
         'limit' => 1
       ]
     );
@@ -95,7 +95,7 @@ class Pages extends \DB\SQL\Mapper {
    */
   public function last() {
     $result = $this->select('pid', [$this->is_published], [
-        'order' => 'pid desc',
+        'order' => 'created_date desc',
         'limit' => 1
       ]
     );

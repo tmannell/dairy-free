@@ -105,9 +105,13 @@
 	<div class="row">
 		<div class="col text-center">
 			<div id="date">{{ @page_date }}</div>
-			<a class="img" href="mailto:sickly@lactard.net">
-				<img src="/assets/images/contact.png" alt="mailto">
-			</a>
+			<check if="{{ trim(@site_email) !== '' }}" >
+				<true>
+					<a class="img" href="mailto:{{ @site_email }}">
+						<img src="/assets/images/contact.png" alt="mailto">
+					</a>
+				</true>
+			</check>
 		</div>
 	</div>
 </div>

@@ -95,7 +95,7 @@ class Page extends Main {
     // Set form action.
     $form->action = '/page/add';
     // All fields are required.
-    $form->required = 'page_title, page_image, publish_date';
+    $form->required = 'page_image, publish_date';
     $form->required_indicator = ' * ';
     // Turn off Formr default upload behavior.
     $form->uploads = FALSE;
@@ -169,7 +169,7 @@ class Page extends Main {
     // Set form action.
     $form->action = '/page/' . $this->pid . '/edit';
     // All fields are required.
-    $form->required = 'page_title, publish_date, created_date';
+    $form->required = 'publish_date, created_date';
     $form->required_indicator = ' * ';
     // Turn off Formr default upload behavior.
     $form->uploads = FALSE;
