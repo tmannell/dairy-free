@@ -260,4 +260,19 @@ class Pages extends \DB\SQL\Mapper {
     return $this->count([$this->is_published]);
   }
 
+  /**
+   * Find the newest page created.
+   *
+   * @return false|mixed
+   */
+  public function newest() {
+    $result = $this->select('pid', [$this->is_published], [
+        'order' => 'pid desc',
+        'limit' => 1
+      ]
+    );
+
+    return $result[0]['pid'] ?? null;
+  }
+
 }

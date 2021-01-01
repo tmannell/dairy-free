@@ -44,7 +44,7 @@ class Page extends Main {
    */
   public function newest() {
     $pages_mapper = new Pages();
-    $this->f3->reroute('/page/' . $pages_mapper->last());
+    $this->f3->reroute('/page/' . $pages_mapper->newest());
   }
 
   /**
