@@ -16,11 +16,6 @@ class Page extends Main {
   protected $page;
 
   /**
-   * @var
-   */
-  protected $pages;
-
-  /**
    * Page constructor.
    */
   public function __construct() {
@@ -48,7 +43,8 @@ class Page extends Main {
    * most recently created image.
    */
   public function newest() {
-    $this->f3->reroute('/page/' . $this->pages->last());
+    $pages_mapper = new Pages();
+    $this->f3->reroute('/page/' . $pages_mapper->last());
   }
 
   /**
