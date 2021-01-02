@@ -7,7 +7,7 @@
         <fieldset>
           <h4 class="form-header text-left">Content</h4>
           {{ @form->textarea('page_title', 'Title') }}
-          {{ @form->file('page_image', 'Image File') }}
+          {{ @form->file('page_image', 'Image File *') }}
           {{ @form->date('publish_date', 'Publish Date', @publish_date_default) }}
           <div class="form-check">
             <input type="checkbox" name="is_published" class="form-check-input" id="is-published" checked="checked">
