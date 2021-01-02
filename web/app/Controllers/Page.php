@@ -91,7 +91,7 @@ class Page extends Main {
     // Set form action.
     $form->action = '/page/add';
     // All fields are required.
-    $form->required = 'page_image, publish_date';
+    $form->required = 'publish_date';
     $form->required_indicator = ' * ';
     // Turn off Formr default upload behavior.
     $form->uploads = FALSE;
@@ -326,6 +326,11 @@ class Page extends Main {
    */
   protected function validateForm($form, $data, $files, $op) {
 
+    // Check if required field page_image was actually uploaded.
+    if ($op === 'create' && !isset($files['page_image']['name'])) {
+      $form->add_to_errors('page_image');
+    }
+
     // Validate file types.
     if ($op === 'create' || ($op === 'update' && isset($files['page_image']['name']))) {
       if (!in_array($files['page_image']['type'], [
@@ -373,9 +378,7 @@ class Page extends Main {
 
     // Check for errors and print messages.
     if ($form->errors()) {
-      if ($form->in_errors('page_title')) {
-        $form->error_message('Title is required.');
-      }
+
       if ($form->in_errors('page_image')) {
         $form->error_message('File missing or incorrect image file type. Allowed file types <em>jpg, png, gif</em>');
       }
