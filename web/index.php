@@ -9,7 +9,6 @@ $f3->config('routes.ini');
 
 // Sets custom 404 page.
 if ($f3->get('DEBUG') === 0) {
-  exit;
   $f3->set('ONERROR', function () {
     echo Template::instance()->render('app/Views/noContent.htm');
   });
