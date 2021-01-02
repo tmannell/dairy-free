@@ -56,7 +56,7 @@ class Pages extends \DB\SQL\Mapper {
    */
   public function first() {
     $result = $this->select('pid', [$this->is_published], [
-        'order' => 'pid asc',
+        'order' => 'created_date asc',
         'limit' => 1
       ]
     );
@@ -95,7 +95,7 @@ class Pages extends \DB\SQL\Mapper {
    */
   public function last() {
     $result = $this->select('pid', [$this->is_published], [
-        'order' => 'pid desc',
+        'order' => 'created_date desc',
         'limit' => 1
       ]
     );
@@ -247,6 +247,32 @@ class Pages extends \DB\SQL\Mapper {
               LIMIT 1");
 
     return $result[0]['id'] ?? null;
+  }
+
+  /**
+   * Returns total pages.
+   *
+   * Will return only published for anonymous users.
+   *
+   * @return int
+   */
+  public function totalPages() {
+    return $this->count([$this->is_published]);
+  }
+
+  /**
+   * Find the newest page created.
+   *
+   * @return false|mixed
+   */
+  public function newest() {
+    $result = $this->select('pid', [$this->is_published], [
+        'order' => 'pid desc',
+        'limit' => 1
+      ]
+    );
+
+    return $result[0]['pid'] ?? null;
   }
 
 }

@@ -7,7 +7,7 @@
 			<check if="{{ @pid != @first }}">
 				<true>
 					<a class="img" id="first" href="{{ @path }}{{ @first }}">
-						<img src="../../assets/images/first.jpg" alt="first">
+						<img src="/assets/images/first.jpg" alt="first">
 					</a>
 				</true>
 			</check>
@@ -17,7 +17,7 @@
 			<check if="{{ @pid != @first }}">
 				<true>
 					<a class="img" id="previous" href="{{ @path }}{{ @previous }}">
-						<img src="../../assets/images/previous.jpg" alt="previous">
+						<img src="/assets/images/previous.jpg" alt="previous">
 					</a>
 				</true>
 			</check>
@@ -25,7 +25,7 @@
 
 		<div class="col-md-8 order-md-3 col-12 order-5">
 			<div id="picture" class="text-center">
-				<img class="img-fluid" src="../../assets/pictures/{{ @filename }}" />
+				<img class="img-fluid" src="/assets/pictures/{{ @filename }}" />
 			</div>
 		</div>
 
@@ -33,7 +33,7 @@
 			<check if="{{ @pid != @last }}">
 				<true>
 					<a class="img" id="next" href="{{ @path }}{{ @next }}">
-						<img src="../../assets/images/next.jpg" alt="next">
+						<img src="/assets/images/next.jpg" alt="next">
 					</a>
 				</true>
 			</check>
@@ -43,7 +43,7 @@
 			<check if="{{ @pid != @last }}">
 				<true>
 					<a class="img" id="last" href="{{ @path }}{{ @last }}">
-						<img src="../../assets/images/last.jpg" alt="last">
+						<img src="/assets/images/last.jpg" alt="last">
 					</a>
 				</true>
 			</check>
@@ -58,7 +58,7 @@
 					<true>
 						<div id="media_type">
 							<a class="img" id="listen" href="#listen">
-								<img src="../../assets/images/sound.jpg" alt="sound">
+								<img src="/assets/images/sound.jpg" alt="sound">
 							</a>
 						</div>
 					</true>
@@ -68,7 +68,7 @@
 					<true>
 						<div id="media-type">
 							<a class="img" id="link" href="{{ @media }}" target="_blank">
-								<img src="../../assets/images/visual.jpg" alt="visual">
+								<img src="/assets/images/visual.jpg" alt="visual">
 							</a>
 						</div>
 					</true>
@@ -77,18 +77,23 @@
 			<div class="col-md-8 col-8" id="title">
 				<div>{{ html_entity_decode( @title ) }}</div>
 			</div>
-		<div class="col-md-2 col-2" id="random-col">
-			<a class="img" id="random" href="/random">
-				<img src="../../assets/images/random.jpg" alt="random">
-			</a>
-		</div>
+
+			<div class="col-md-2 col-2" id="random-col">
+<!--				<check if="{{ @count > 1 }}" >-->
+<!--					<true>-->
+<!--						<a class="img" id="random" href="/random">-->
+<!--							<img src="/assets/images/random.png" alt="random">-->
+<!--						</a>-->
+<!--					</true>-->
+<!--				</check>-->
+			</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12 col-12 text-center d-block">
 			<check if="{{ @media_type == 'audio' }} ">
 				<true>
 					<div id="audio-player">
-						<audio src="../../assets/audio/{{ @media }}" />
+						<audio src="/assets/audio/{{ @media }}" />
 					</div>
 				</true>
 			</check>
@@ -100,9 +105,13 @@
 	<div class="row">
 		<div class="col text-center">
 			<div id="date">{{ @page_date }}</div>
-			<a class="img" href="mailto:sickly@lactard.net">
-				<img src="../../assets/images/contact.jpg" alt="mailto">
-			</a>
+			<check if="{{ trim(@site_email) !== '' }}" >
+				<true>
+					<a class="img" href="mailto:{{ @site_email }}">
+						<img src="/assets/images/contact.png" alt="mailto">
+					</a>
+				</true>
+			</check>
 		</div>
 	</div>
 </div>
