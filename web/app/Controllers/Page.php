@@ -327,7 +327,7 @@ class Page extends Main {
   protected function validateForm($form, $data, $files, $op) {
 
     // Check if required field page_image was actually uploaded.
-    if (!isset($files['page_image']['name'])) {
+    if ($op === 'create' && !isset($files['page_image']['name'])) {
       $form->add_to_errors('page_image');
     }
 
