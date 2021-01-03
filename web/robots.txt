@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /app
+Disallow: /assets/css
+Disallow: /assets/js
+Disallow: /assets/font
+Disallow: /assets/images
+Disallow: /lib
