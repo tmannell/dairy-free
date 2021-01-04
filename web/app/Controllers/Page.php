@@ -642,7 +642,7 @@ class Page extends Main {
 
   /**
    * Save or remove tags on submission.
-   * 
+   *
    * @param $tag_string
    * @param $picture_id
    */

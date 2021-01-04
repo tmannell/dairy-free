@@ -64,7 +64,7 @@ class Admin extends Main {
     $rows = [];
     foreach($page['subset'] as $res) {
       $rows[$res->get('pid')] = [
-        'title' => $res->get('title'),
+        'title' => trim($res->get('title')) === '' ? '...' : $res->get('title'),
         'publish_date' => date('Y-m-d', strtotime($res->get('publish_date'))),
         'created_date' => date('Y-m-d H:i', strtotime($res->get('created_date'))),
         'user_id' => $res->get('user_id'),
