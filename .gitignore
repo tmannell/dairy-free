@@ -10,6 +10,7 @@
 #Speific files and directories
 
 web/favicon.ico
+web/robots.txt
 web/assets/comics/
 !web/assets/pictures
 web/assets/pictures/*

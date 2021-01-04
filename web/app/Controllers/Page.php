@@ -557,30 +557,8 @@ class Page extends Main {
     $media->set('picture_id', $picture->id);
     $media->save();
 
-    // Save the tags to the database.
-    if (trim($data['tags']) !== '') {
-      $tags = str_replace(' ', '', strtolower($data['tags']));
-      $tags = explode(',', $tags);
-      $tags = array_unique($tags);
-
-      // Remove any tags from the tags array that already exist
-      // for this picture in the database.
-      foreach ($tags as $key => $new_tag) {
-        $tag_mapper = new Tags();
-        $result = $tag_mapper->load(['tag = ? and picture_id = ?', $new_tag, $picture->id], ['limit' => 1]);
-        if ($result) {
-          unset($tags[$key]);
-        }
-      }
-
-      // Save the tags.
-      foreach ($tags as $new_tag) {
-        $tag = new Tags();
-        $tag->set('tag', $new_tag);
-        $tag->set('picture_id', $picture->id);
-        $tag->save();
-      }
-    }
+    // Save tags.
+    $this->saveTags($data['tags'], $picture->id);
 
     // Returns picture id on successful update.
     // Used in redirect.
@@ -658,6 +636,59 @@ class Page extends Main {
         if ($this->page->get('is_published') === 0) {
           $this->f3->set('unpublished', 1);
         }
+      }
+    }
+  }
+
+  /**
+   * Save or remove tags on submission.
+   *
+   * @param $tag_string
+   * @param $picture_id
+   */
+  protected function saveTags($tag_string, $picture_id) {
+
+    // Get all the tags in the database for this picture
+    $tag_mapper = new Tags();
+    $tag_mapper->load(['picture_id = ?', $picture_id]);
+
+    // Save the tags to the database.
+    if (trim($tag_string) !== '') {
+      $tags = str_replace(' ', '', strtolower($tag_string));
+      $tags = explode(',', $tags);
+      $tags = array_unique($tags);
+
+      // Cycle through old tags.
+      while (!$tag_mapper->dry()) {
+        // Let's remove tags that haven't been submitted or removed.
+        if (!in_array($tag_mapper->get('tag'), $tags)) {
+          $tag_mapper->erase();
+        }
+        // If the tag already exists, let's remove it from the tag
+        // submission array.
+        else {
+          $key = array_search($tag_mapper->get('tag'), $tags);
+          unset($tags[$key]);
+        }
+
+        // Go to the next tag in the results;
+        $tag_mapper->next();
+      }
+
+      // Save the tags.
+      foreach ($tags as $new_tag) {
+        $tag = new Tags();
+        $tag->set('tag', $new_tag);
+        $tag->set('picture_id', $picture_id);
+        $tag->save();
+      }
+    }
+    // No tags submitted but there's some in the db.
+    elseif (trim($tag_string) === '' && !$tag_mapper->dry()) {
+      // Erase all tags in the db for this picture
+      while (!$tag_mapper->dry()) {
+        $tag_mapper->erase();
+        $tag_mapper->next();
       }
     }
   }
