@@ -37,13 +37,14 @@ class Admin extends Main {
     $page_mapper = new Pages();
     // Use fat free paginate function to get the numbers!
     $page = $page_mapper->paginate(
-      $this->position,
+      $this->position - 1,
       $limit,
       $this->filter,
       [
         'order' => 'created_date desc'
       ]
     );
+
 
     if ($page['total'] === 0) {
       $template = new Template();
@@ -102,7 +103,7 @@ class Admin extends Main {
     $tags = new Tags();
     // Get the paginate numbers!
     $page = $tags->paginate(
-      $this->position,
+      $this->position - 1,
       $limit,
       null,
       [
@@ -162,7 +163,7 @@ class Admin extends Main {
     $users = new Users();
     // Get the paginate numbers!
     $page = $users->paginate(
-      $this->position,
+      $this->position - 1,
       $limit,
       null,
       [
