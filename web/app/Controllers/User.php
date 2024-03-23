@@ -41,6 +41,7 @@ Class User extends Main {
     // Declare the forms action property.
     $form->action = '/login';
     // Set some vars for the template.
+    $this->f3->set('title', 'Login');
     $this->f3->set('form', $form);
 
     // If the form has been submitted.
@@ -87,14 +88,22 @@ Class User extends Main {
     $pages = new Pages();
     $total_posts = $pages->count(['user_id = ?', $this->uid]);
 
+    // Set last posted date.
     $creation_date = 'Never!';
     if ($total_posts > 0) {
       // Latest creation date.
-      $pages->select('created_date', [
-        'limit' => 1,
-        'order' => 'creation_date desc'
+      $latest = $pages->select('created_date', null, [
+
+
       ]);
-      $date = $pages->get('created_date');
+      $date = $pages->select(
+        'created_date',
+        null,
+        [
+          'order' => 'created_date desc',
+          'limit' => 1,
+        ]
+      )[0]->get('created_date');
       $date_obj = new DateTime($date);
       $creation_date = $date_obj->format('Y-m-d H:i');
     }
@@ -302,7 +311,7 @@ Class User extends Main {
     $args = Helper::explodePath();
     // If we are not adding a new user lets load up the
     // current user obj and store the uid in a separate var.
-    if (is_numeric($args[2]) && strtolower($args[1]) === 'user') {
+    if (count($args) >= 2 && is_numeric($args[2]) && strtolower($args[1]) === 'user') {
 
       // Get the user id from URL
       $this->uid = $args[2];

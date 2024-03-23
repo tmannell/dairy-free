@@ -130,6 +130,9 @@ class Admin extends Main {
     // tag is used.
     $count = [];
     foreach ($page['subset'] as $tag) {
+      if (!isset($count[$tag->get('tag')])) {
+        $count[$tag->get('tag')] = 0;
+      }
       $count[$tag->get('tag')]++;
     }
 

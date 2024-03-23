@@ -87,6 +87,10 @@ fieldset{
 	color: #a4a4a4;
 }
 
+#page_image, #page_media {
+	border:none !important;
+}
+
 #page-link,
 input[name="page_media"] {
 	display: none;
