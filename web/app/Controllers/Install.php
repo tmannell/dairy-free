@@ -44,7 +44,7 @@ class Install extends Main {
       $data = $form->validate('username, password(min[8]), password2(matches[password]), database_name(min[3])');
 
       // Validate the form.
-      if ($form->errors()) {
+      if ($form->errors() != null) {
         if ( $form->in_errors('password2')) {
           $form->error_message( 'Passwords do not match.' );
         }
@@ -136,7 +136,7 @@ class Install extends Main {
          ON UPDATE NO ACTION
        ) ENGINE = InnoDB;
 
-       CREATE INDEX tag_id_idx ON `$db_name`.`tag` (`id` ASC);"
+       CREATE INDEX tag_id_idx ON `$db_name`.`tags` (`id` ASC);"
     );
     // Create the database.
     $this->db->commit();

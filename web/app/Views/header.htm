@@ -7,11 +7,19 @@
 
     <title>{{ @site_title }}</title>
 
-    <meta property="og:title" content="{{ @title }}">
+    <check if="{{ isset(@title) }}">
+      <true>
+        <meta property="og:title" content="{{ @title }}">
+      </true>
+      <false>
+        <meta property="og:title" content="{{ @site_title }}">
+      </false>
+    </check>
+
     <meta property="og:site_name" content="Lactard">
-    <meta property="og:image" content="http://lactard.net/assets/images/banner.jpg">
+    <meta property="og:image" content="assets/images/banner.jpg">
     <meta property="og:description" content="{{ @site_description }}">
-    <meta property="og:url" content="https://lactard.net">
+    <meta property="og:url" content="{{ @site_url }}">
 
     <meta name="description" content="Lactard - Daily Web Comic for the weak of stomach.">
     <meta name="generator" content="Lactarded Stuff">
@@ -32,6 +40,7 @@
       <check if ="{{ isset(@SESSION.uid) }}">
         <true>
           <include href="app/Views/adminBar.htm" />
+          <include href="app/Views/navBar.htm" />
         </true>
       </check>
       <div class="main flex-fill">

@@ -27,6 +27,12 @@ Class Helper extends Main {
       $args = explode('/', $path)[$key];
     }
 
+    // Remove empty values
+    $args = array_filter($args, function($value) {
+      return $value !== '';
+    });
+
+    // Return cleaned array.
     return $args;
   }
 

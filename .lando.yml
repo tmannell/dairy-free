@@ -1,7 +1,7 @@
-name: lactard
+name: dairyfree
 recipe: lamp
 config:
-  php: '7.4'
+  php: '8.1'
   webroot: web
   database: mariadb
   xdebug: true

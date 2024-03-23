@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c863a8c6bbe3c90fc881ead9700d4d46",
+    "content-hash": "15dc5cd88c25b84eed0b168f17fe5aa5",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
-            "version": "3.7.2",
+            "version": "3.8.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bcosca/fatfree-core.git",
-                "reference": "a0f7ecf456a2f1e099a9b6d7aedc22970be56030"
+                "url": "https://github.com/f3-factory/fatfree-core.git",
+                "reference": "774692ce7698904d3cb35bbd4f79376bb17eeddc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/a0f7ecf456a2f1e099a9b6d7aedc22970be56030",
-                "reference": "a0f7ecf456a2f1e099a9b6d7aedc22970be56030",
+                "url": "https://api.github.com/repos/f3-factory/fatfree-core/zipball/774692ce7698904d3cb35bbd4f79376bb17eeddc",
+                "reference": "774692ce7698904d3cb35bbd4f79376bb17eeddc",
                 "shasum": ""
             },
             "require": {
@@ -36,10 +36,10 @@
             "description": "A powerful yet easy-to-use PHP micro-framework designed to help you build dynamic and robust Web applications - fast!",
             "homepage": "http://fatfreeframework.com/",
             "support": {
-                "issues": "https://github.com/bcosca/fatfree-core/issues",
-                "source": "https://github.com/bcosca/fatfree-core/tree/3.7.2"
+                "issues": "https://github.com/f3-factory/fatfree-core/issues",
+                "source": "https://github.com/f3-factory/fatfree-core/tree/3.8.2"
             },
-            "time": "2020-05-28T16:14:27+00:00"
+            "time": "2023-07-23T22:11:30+00:00"
         },
         {
             "name": "components/font-awesome",
@@ -131,20 +131,19 @@
         },
         {
             "name": "formr/formr",
-            "version": "1.2.2",
+            "version": "v1.4.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/formr/Formr.git",
-                "reference": "bba97c25b290becacae38028a44a5b33ce922a46"
+                "url": "https://github.com/formr/formr.git",
+                "reference": "709459fb89c07a64bac113b190d2868eb980c310"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/formr/Formr/zipball/bba97c25b290becacae38028a44a5b33ce922a46",
-                "reference": "bba97c25b290becacae38028a44a5b33ce922a46",
+                "url": "https://api.github.com/repos/formr/formr/zipball/709459fb89c07a64bac113b190d2868eb980c310",
+                "reference": "709459fb89c07a64bac113b190d2868eb980c310",
                 "shasum": ""
             },
             "require": {
-                "formr/formr": "^1.2",
                 "php": ">=5.6"
             },
             "type": "library",
@@ -166,8 +165,8 @@
             ],
             "description": "Formr is a PHP micro-framework which helps you build and validate forms quickly, painlessly, and without all the messy overhead.",
             "support": {
-                "issues": "https://github.com/formr/Formr/issues",
-                "source": "https://github.com/formr/Formr/tree/1.2.2"
+                "issues": "https://github.com/formr/formr/issues",
+                "source": "https://github.com/formr/formr/tree/v1.4.11"
             },
             "funding": [
                 {
@@ -175,20 +174,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-22T21:19:53+00:00"
+            "time": "2024-02-08T20:48:43+00:00"
         },
         {
             "name": "twbs/bootstrap",
-            "version": "v4.5.3",
+            "version": "v4.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "a716fb03f965dc0846df479e14388b1b4b93d7ce"
+                "reference": "e5643aaa89eb67327a5b4abe7db976f0ea276b70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/a716fb03f965dc0846df479e14388b1b4b93d7ce",
-                "reference": "a716fb03f965dc0846df479e14388b1b4b93d7ce",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e5643aaa89eb67327a5b4abe7db976f0ea276b70",
+                "reference": "e5643aaa89eb67327a5b4abe7db976f0ea276b70",
                 "shasum": ""
             },
             "replace": {
@@ -228,28 +227,22 @@
             ],
             "support": {
                 "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v4.5.3"
+                "source": "https://github.com/twbs/bootstrap/tree/v4.6.2"
             },
-            "funding": [
-                {
-                    "url": "https://opencollective.com/bootstrap",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2020-10-13T15:38:30+00:00"
+            "time": "2022-07-19T15:13:44+00:00"
         },
         {
             "name": "xfra35/f3-access",
-            "version": "v1.1.0",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xfra35/f3-access.git",
-                "reference": "8ce44f68b06f9edd1f19be8f38f11cd7a9002962"
+                "reference": "de8e697e3f61b7d4e0d71c448346f38162677796"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xfra35/f3-access/zipball/8ce44f68b06f9edd1f19be8f38f11cd7a9002962",
-                "reference": "8ce44f68b06f9edd1f19be8f38f11cd7a9002962",
+                "url": "https://api.github.com/repos/xfra35/f3-access/zipball/de8e697e3f61b7d4e0d71c448346f38162677796",
+                "reference": "de8e697e3f61b7d4e0d71c448346f38162677796",
                 "shasum": ""
             },
             "require": {
@@ -275,9 +268,9 @@
             ],
             "support": {
                 "issues": "https://github.com/xfra35/f3-access/issues",
-                "source": "https://github.com/xfra35/f3-access/tree/v1.1.0"
+                "source": "https://github.com/xfra35/f3-access/tree/v1.2.2"
             },
-            "time": "2016-09-28T12:08:51+00:00"
+            "time": "2021-04-29T16:52:25+00:00"
         },
         {
             "name": "xfra35/f3-cron",
@@ -329,5 +322,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.6.0"
 }
