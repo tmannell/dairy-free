@@ -1,7 +1,7 @@
 {
     "require": {
         "bcosca/fatfree-core": "^3.8.0",
-        "twbs/bootstrap": "^4.0",
+        "twbs/bootstrap": "^5.0",
         "components/jquery": "^3.2",
         "components/font-awesome": "^4.7",
         "xfra35/f3-access": "^1.0",
@@ -11,17 +11,13 @@
     "scripts": {
         "post-install-cmd": [
             "cp -rf vendor/twbs/bootstrap/dist/css/bootstrap.min.css web/assets/css/",
-            "cp -rf vendor/twbs/bootstrap/dist/js/bootstrap.min.js web/assets/js/",
-            "cp -rf vendor/twbs/bootstrap/dist/css/bootstrap.min.css.map web/assets/css/",
-            "cp -rf vendor/twbs/bootstrap/dist/js/bootstrap.min.js.map web/assets/js/",
+            "cp -rf vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js web/assets/js/",
             "cp -rf vendor/components/jquery/jquery.min.js web/assets/js/",
             "cp -rf vendor/components/font-awesome/css/font-awesome.min.css web/assets/css/"
         ],
 	"post-update-cmd": [
             "cp -rf vendor/twbs/bootstrap/dist/css/bootstrap.min.css web/assets/css/",
-            "cp -rf vendor/twbs/bootstrap/dist/js/bootstrap.min.js web/assets/js/",
-            "cp -rf vendor/twbs/bootstrap/dist/js/bootstrap.min.css.map web/assets/css/",
-            "cp -rf vendor/twbs/bootstrap/dist/js/bootstrap.min.js.map web/assets/js/",
+            "cp -rf vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js web/assets/js/",
             "cp -rf vendor/components/jquery/jquery.min.js web/assets/js/",
             "cp -rf vendor/components/font-awesome/css/font-awesome.css web/assets/css/"
         ]

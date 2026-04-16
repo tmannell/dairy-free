@@ -47,6 +47,7 @@ class Main {
   public function afterroute() {
     // Clear SESSION.<msg>
     $this->f3->clear('SESSION.message');
+    $this->f3->clear('SESSION.formr_errors');
   }
 
   /**

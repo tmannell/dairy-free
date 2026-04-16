@@ -6,12 +6,12 @@
 Class Helper extends Main {
 
   /**
-   * Returns a component of the current AngryGiant path
+   * Returns a component of the current path
    * OR
-   * Returns all components of the current AngryGiant path as an array.
+   * Returns all components of the current path as an array.
    *
    * @param null $key
-   *  Key of path component. ie www.angrygiant.com/story/13 = array(1 => story, 2 => 13)
+   *  Key of path component. ie /story/13 = array(1 => story, 2 => 13)
    *
    * @return array|string
    */

@@ -350,7 +350,12 @@ class Page extends Main {
     }
 
     // On update - media type is audio but there's no file.
-    if ($op === 'update' && $data['media_type'] === 'audio' && $defaults['media'] === '') {
+    if (
+        $op === 'update'
+        && $data['media_type'] === 'audio'
+        && $defaults['media_type'] !== 'audio'
+        && !isset($files['page_media']['name'])
+    ) {
       $form->add_to_errors('audio_missing');
     }
     // Media type is audio but wrong file type.
@@ -378,25 +383,27 @@ class Page extends Main {
 
     // Check for errors and print messages.
     if ($form->errors()) {
-
+      $errors = [];
       if ($form->in_errors('page_image')) {
-        $form->error_message('File missing or incorrect image file type. Allowed file types <em>jpg, png, gif</em>');
+        $errors[] = "File missing or incorrect image file type. Allowed file types jpg, png, gif";
       }
       if ($form->in_errors('page_media')) {
-        $form->error_message('Incorrect audio file type. Allowed file types <em>mp3</em>');
+        $errors[] = "Incorrect audio file type. Allowed file types mp3";
       }
       if ($form->in_errors('publish_date')) {
-        $form->error_message('Publish date is in the incorrect format.');
+        $errors[] = 'Publish date is in the incorrect format.';
       }
       if ($form->in_errors('created_date')) {
-        $form->error_message('Date created is in the incorrect format.');
+        $errors[] = 'Date created is in the incorrect format.';
       }
       if ($form->in_errors('link_empty')) {
-        $form->error_message('Missing media link.');
+        $errors[] = 'Missings media link.';
       }
       if ($form->in_errors('audio_missing')) {
-        $form->error_message('Missing audio file.');
+        $errors[] = 'Missing audio file.';
       }
+
+      $this->f3->set('SESSION.formr_errors', $errors);
 
       return false;
     }
@@ -538,7 +545,9 @@ class Page extends Main {
     $picture->set('created_date', $created_date);
     $picture = $picture->save();
 
-    if ($data['media_type'] !== '') {
+    // Let's manage the media type now. There's two option Link and Audio.
+    // If one is selected, let's see if it's already in the database and just needs updating.
+    if ($data['media_type'] != '') {
       $media_mapper = new Media();
       $media = $media_mapper->load(['picture_id = ?', $this->pid]);
 
@@ -547,16 +556,18 @@ class Page extends Main {
         $media = $media_mapper;
       }
 
-      $media->set('media_type', $data['media_type']);
-
-      // Now let's save the media entity.
+      // If it's a page link use that form data.
       if ($data['media_type'] === 'link') {
         $media->set('media', $data['page_link']);
       }
-      elseif ($data['media_type'] === 'audio' && isset($audio_filename)) {
-        $media->set('media', $audio_filename);
+      else {
+        if (isset($audio_filename)) {
+          $media->set('media', $audio_filename);
+        }
       }
 
+      // Let's set the fields that are common to both tyles.
+      $media->set('media_type', $data['media_type']);
       $media->set('picture_id', $picture->id);
       $media->save();
     }
@@ -565,7 +576,7 @@ class Page extends Main {
       $media_mapper = new Media();
       $media = $media_mapper->load(['picture_id = ?', $this->pid]);
 
-      // If we can't find the media return false;
+      // Only erase it if it exists.
       if ($media) {
         $media_mapper->erase();
       }
