@@ -2,16 +2,14 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-{{ @size }} col-12 center-margin" id="add-btn">
-      <check if="{{ isset(@viewed_username) }}">
-        <true>
-          <div class="float-left">Pages by {{ @viewed_username }}</div>
-        </true>
-        <false>
-          <div class="float-left">All pages</div>
-        </false>
-      </check>
-      <a class="float-right btn btn-light" href="/page/add">Add Page</a>
+    <div class="col-sm-{{ @size }} col-12 d-flex justify-content-between center-margin" id="add-btn">
+      <div>
+        <check if="{{ isset(@viewed_username) }}">
+          <true>Pages by {{ @viewed_username }}</true>
+          <false>All pages</false>
+        </check>
+      </div>
+      <a class="btn btn-light" href="/page/add">Add Page</a>
     </div>
   </div>
   <div class="row">

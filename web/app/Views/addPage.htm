@@ -1,46 +1,45 @@
 <include href="app/Views/header.htm" />
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-6 col-md-8 col-sm-12 col-12 center-form">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
       {{ @form->open_multipart('add_page', 'add_page') }}
-        <fieldset>
-          <h4 class="form-header text-left">Content</h4>
-          {{ @form->textarea('page_title', 'Title') }}
-          {{ @form->file('page_image', 'Image File *') }}
-          {{ @form->date('publish_date', 'Publish Date', @publish_date_default) }}
-          <div class="form-check">
-            <input type="checkbox" name="is_published" class="form-check-input" id="is-published" checked="checked">
-            <label class="form-check-label" for="is-published">Publish</label>
-          </div>
-        </fieldset>
-        <fieldset>
-          <h4 class="form-header text-left">Linked Media</h4>
-            {{ @form->select('media_type', 'Media Type', '', '', '', '', '', @media_options) }}
-            <div id="page-link">
-              {{ @form->label('page_link', 'Link') }}
-              {{ @form->text('page_link') }}
-            </div>
-            {{ @form->file('page_media') }}
-        </fieldset>
-        <fieldset>
-          <h4 class="form-header text-left">Tags</h4>
-            {{ @form->text('tags', 'Tags', '', '', '', 'Separate multiple tags with a comma.') }}
-        </fieldset>
-        <div class="row">
-          <div class="col-3">
-            <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block bg-light l-btn">
-              Save
-            </button>
-          </div>
-          <div class="col-3">
-            <a class="btn btn-primary btn-lg btn-block bg-light l-btn" href="/admin/content">Cancel</a>
-          </div>
+      <fieldset>
+        <h4 class="form-header">Content</h4>
+        {{ @form->textarea('page_title', 'Title') }}
+        {{ @form->file('page_image', 'Image File *') }}
+        {{ @form->date('publish_date', 'Publish Date', @publish_date_default) }}
+        <div class="form-check">
+          <input type="checkbox" name="is_published" class="form-check-input" id="is-published" checked="checked">
+          <label class="form-check-label" for="is-published">Publish</label>
         </div>
+      </fieldset>
+      <fieldset>
+        <h4 class="form-header">Linked Media</h4>
+        {{ @form->select('media_type', 'Media Type', '', '', '', '', '', @media_options) }}
+        <div id="page-link">
+          {{ @form->label('page_link', 'Link') }}
+          {{ @form->text('page_link') }}
+        </div>
+        {{ @form->file('page_media') }}
+      </fieldset>
+      <fieldset>
+        <h4 class="form-header">Tags</h4>
+        {{ @form->text('tags', 'Tags', '', '', '', 'Separate multiple tags with a comma.') }}
+      </fieldset>
+      <div class="row">
+        <div class="col">
+          <button type="submit" name="submit" id="submit" class="btn btn-light btn-lg w-100 custom-bg-light">
+            Save
+          </button>
+        </div>
+        <div class="col-6">
+          <a class="btn btn-light btn-lg w-100 custom-bg-light" href="/admin/content">Cancel</a>
+        </div>
+      </div>
       {{ @form->close() }}
     </div>
   </div>
 </div>
-
 
 <include href="app/Views/footer.htm" />
