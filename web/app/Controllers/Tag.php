@@ -7,25 +7,25 @@ class Tag extends Main {
 
   /**
    * The picture entity id.
-   * @var
+   * @var int
    */
   protected $picture_id;
 
   /**
    * The page id.
-   * @var
+   * @var \Pages
    */
   protected $page;
 
   /**
    * A group of tag entities.
-   * @var
+   * @var \Tags
    */
   protected $tags;
 
   /**
    * The tag or tag_name
-   * @var
+   * @var string
    */
   protected $tag_name;
 

@@ -6,12 +6,12 @@
 class Page extends Main {
 
   /**
-   * @var
+   * @var int
    */
   protected $pid;
 
   /**
-   * @var
+   * @var \Pages
    */
   protected $page;
 
@@ -135,7 +135,7 @@ class Page extends Main {
       if ($valid === true) {
         // Save the submission.
         $picture_id = $this->create($form, $data, $files);
-        // Creation successfull, redirect.
+        // Creation successful, redirect.
         if ($picture_id) {
           // Set display message.
           $this->f3->set('SESSION.message.type', 'alert-success');
@@ -418,7 +418,7 @@ class Page extends Main {
    * @param $data
    * @param $files
    *
-   * @return false
+   * @return int|false
    */
   protected function create($form, $data, $files) {
     // Save the files before writing to the database.
@@ -490,7 +490,7 @@ class Page extends Main {
    * @param $data
    * @param $files
    *
-   * @return false
+   * @return false|int
    * @throws \Exception
    */
   protected function update($form, $data, $files) {
@@ -603,7 +603,7 @@ class Page extends Main {
     // as possible.
     $img_filename = strtolower($file['name']);
     $img_filename = str_replace(' ', '_', $img_filename);
-    $hash = hash('crc32', rand(0, 10000000));
+    $hash = hash('crc32', (string) rand(0, 10000000));
     $img_filename = $hash . '__' . $img_filename;
 
     // Save the image file.
@@ -709,7 +709,7 @@ class Page extends Main {
       }
     }
     // No tags submitted but there's some in the db.
-    elseif (trim($tag_string) === '' && !$tag_mapper->dry()) {
+    else {
       // Erase all tags in the db for this picture
       while (!$tag_mapper->dry()) {
         $tag_mapper->erase();
