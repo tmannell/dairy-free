@@ -2,6 +2,9 @@
 
 /**
  * Class Users
+ *
+ * @property mixed $user
+ * @property int $id
  */
 class Users extends \DB\SQL\Mapper {
 

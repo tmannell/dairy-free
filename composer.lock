@@ -4,24 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c863a8c6bbe3c90fc881ead9700d4d46",
+    "content-hash": "410f5181c2b9d890371eeafd192b83c6",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
-            "version": "3.7.2",
+            "version": "3.9.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bcosca/fatfree-core.git",
-                "reference": "a0f7ecf456a2f1e099a9b6d7aedc22970be56030"
+                "url": "https://github.com/f3-factory/fatfree-core.git",
+                "reference": "3ba261541e529d20b32615fe5f7b5740ea0951a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/a0f7ecf456a2f1e099a9b6d7aedc22970be56030",
-                "reference": "a0f7ecf456a2f1e099a9b6d7aedc22970be56030",
+                "url": "https://api.github.com/repos/f3-factory/fatfree-core/zipball/3ba261541e529d20b32615fe5f7b5740ea0951a3",
+                "reference": "3ba261541e529d20b32615fe5f7b5740ea0951a3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4"
+                "php": ">=7.2"
             },
             "type": "library",
             "autoload": {
@@ -36,76 +36,47 @@
             "description": "A powerful yet easy-to-use PHP micro-framework designed to help you build dynamic and robust Web applications - fast!",
             "homepage": "http://fatfreeframework.com/",
             "support": {
-                "issues": "https://github.com/bcosca/fatfree-core/issues",
-                "source": "https://github.com/bcosca/fatfree-core/tree/3.7.2"
+                "issues": "https://github.com/f3-factory/fatfree-core/issues",
+                "source": "https://github.com/f3-factory/fatfree-core/tree/3.9.2"
             },
-            "time": "2020-05-28T16:14:27+00:00"
-        },
-        {
-            "name": "components/font-awesome",
-            "version": "4.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/components/font-awesome.git",
-                "reference": "885308b939369d147bec93174722786bc2c4eedd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/components/font-awesome/zipball/885308b939369d147bec93174722786bc2c4eedd",
-                "reference": "885308b939369d147bec93174722786bc2c4eedd",
-                "shasum": ""
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "styles": [
-                        "css/font-awesome.css"
-                    ],
-                    "files": [
-                        "css/font-awesome.min.css",
-                        "css/font-awesome.css.map",
-                        "fonts/*"
-                    ]
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/ikkez",
+                    "type": "buy_me_a_coffee"
+                },
+                {
+                    "url": "https://github.com/ikkez",
+                    "type": "github"
                 }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT",
-                "OFL-1.1"
             ],
-            "description": "The iconic font designed for use with Twitter Bootstrap.",
-            "support": {
-                "issues": "https://github.com/components/font-awesome/issues",
-                "source": "https://github.com/components/font-awesome/tree/master"
-            },
-            "time": "2016-10-25T10:56:23+00:00"
+            "time": "2025-12-02T00:44:50+00:00"
         },
         {
             "name": "components/jquery",
-            "version": "3.5.1",
+            "version": "v3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "b33e8f0f9a1cb2ae390cf05d766a900b53d2125b"
+                "reference": "8edc7785239bb8c2ad2b83302b856a1d61de60e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/b33e8f0f9a1cb2ae390cf05d766a900b53d2125b",
-                "reference": "b33e8f0f9a1cb2ae390cf05d766a900b53d2125b",
+                "url": "https://api.github.com/repos/components/jquery/zipball/8edc7785239bb8c2ad2b83302b856a1d61de60e7",
+                "reference": "8edc7785239bb8c2ad2b83302b856a1d61de60e7",
                 "shasum": ""
             },
             "type": "component",
             "extra": {
                 "component": {
-                    "scripts": [
-                        "jquery.js"
-                    ],
                     "files": [
                         "jquery.min.js",
                         "jquery.min.map",
                         "jquery.slim.js",
                         "jquery.slim.min.js",
                         "jquery.slim.min.map"
+                    ],
+                    "scripts": [
+                        "jquery.js"
                     ]
                 }
             },
@@ -127,25 +98,25 @@
                 "source": "https://github.com/jquery/jquery",
                 "wiki": "http://docs.jquery.com/"
             },
-            "time": "2020-05-05T13:21:02+00:00"
+            "time": "2023-09-22T01:43:46+00:00"
         },
         {
             "name": "formr/formr",
-            "version": "1.2.2",
+            "version": "v1.5.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/formr/Formr.git",
-                "reference": "bba97c25b290becacae38028a44a5b33ce922a46"
+                "url": "https://github.com/formr/formr.git",
+                "reference": "6ee7d46cc8f353f44b69cec5ab0d0d3568e1a836"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/formr/Formr/zipball/bba97c25b290becacae38028a44a5b33ce922a46",
-                "reference": "bba97c25b290becacae38028a44a5b33ce922a46",
+                "url": "https://api.github.com/repos/formr/formr/zipball/6ee7d46cc8f353f44b69cec5ab0d0d3568e1a836",
+                "reference": "6ee7d46cc8f353f44b69cec5ab0d0d3568e1a836",
                 "shasum": ""
             },
             "require": {
-                "formr/formr": "^1.2",
-                "php": ">=5.6"
+                "ext-mbstring": "*",
+                "php": ">=8.1"
             },
             "type": "library",
             "autoload": {
@@ -164,10 +135,10 @@
                     "role": "Original Author"
                 }
             ],
-            "description": "Formr is a PHP micro-framework which helps you build and validate forms quickly, painlessly, and without all the messy overhead.",
+            "description": "Formr is a PHP library which helps you build and validate forms quickly, painlessly, and without all the messy overhead.",
             "support": {
-                "issues": "https://github.com/formr/Formr/issues",
-                "source": "https://github.com/formr/Formr/tree/1.2.2"
+                "issues": "https://github.com/formr/formr/issues",
+                "source": "https://github.com/formr/formr/tree/v1.5.4"
             },
             "funding": [
                 {
@@ -175,31 +146,26 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-22T21:19:53+00:00"
+            "time": "2025-07-15T15:34:42+00:00"
         },
         {
             "name": "twbs/bootstrap",
-            "version": "v4.5.3",
+            "version": "v5.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "a716fb03f965dc0846df479e14388b1b4b93d7ce"
+                "reference": "25aa8cc0b32f0d1a54be575347e6d84b70b1acd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/a716fb03f965dc0846df479e14388b1b4b93d7ce",
-                "reference": "a716fb03f965dc0846df479e14388b1b4b93d7ce",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/25aa8cc0b32f0d1a54be575347e6d84b70b1acd7",
+                "reference": "25aa8cc0b32f0d1a54be575347e6d84b70b1acd7",
                 "shasum": ""
             },
             "replace": {
                 "twitter/bootstrap": "self.version"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3.x-dev"
-                }
-            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -228,28 +194,22 @@
             ],
             "support": {
                 "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v4.5.3"
+                "source": "https://github.com/twbs/bootstrap/tree/v5.3.8"
             },
-            "funding": [
-                {
-                    "url": "https://opencollective.com/bootstrap",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2020-10-13T15:38:30+00:00"
+            "time": "2025-08-26T02:01:02+00:00"
         },
         {
             "name": "xfra35/f3-access",
-            "version": "v1.1.0",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xfra35/f3-access.git",
-                "reference": "8ce44f68b06f9edd1f19be8f38f11cd7a9002962"
+                "reference": "de8e697e3f61b7d4e0d71c448346f38162677796"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xfra35/f3-access/zipball/8ce44f68b06f9edd1f19be8f38f11cd7a9002962",
-                "reference": "8ce44f68b06f9edd1f19be8f38f11cd7a9002962",
+                "url": "https://api.github.com/repos/xfra35/f3-access/zipball/de8e697e3f61b7d4e0d71c448346f38162677796",
+                "reference": "de8e697e3f61b7d4e0d71c448346f38162677796",
                 "shasum": ""
             },
             "require": {
@@ -275,26 +235,27 @@
             ],
             "support": {
                 "issues": "https://github.com/xfra35/f3-access/issues",
-                "source": "https://github.com/xfra35/f3-access/tree/v1.1.0"
+                "source": "https://github.com/xfra35/f3-access/tree/v1.2.2"
             },
-            "time": "2016-09-28T12:08:51+00:00"
+            "time": "2021-04-29T16:52:25+00:00"
         },
         {
             "name": "xfra35/f3-cron",
-            "version": "v1.2.1",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xfra35/f3-cron.git",
-                "reference": "eba0a5574a8c35623307dd27135a67d76e4da12e"
+                "reference": "f685f48cbba22871f0f84d2cb815229b07e8d52d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xfra35/f3-cron/zipball/eba0a5574a8c35623307dd27135a67d76e4da12e",
-                "reference": "eba0a5574a8c35623307dd27135a67d76e4da12e",
+                "url": "https://api.github.com/repos/xfra35/f3-cron/zipball/f685f48cbba22871f0f84d2cb815229b07e8d52d",
+                "reference": "f685f48cbba22871f0f84d2cb815229b07e8d52d",
                 "shasum": ""
             },
             "require": {
-                "bcosca/fatfree-core": "~3.5"
+                "bcosca/fatfree-core": "~3.5",
+                "php": ">=7.2"
             },
             "type": "library",
             "autoload": {
@@ -316,18 +277,132 @@
             ],
             "support": {
                 "issues": "https://github.com/xfra35/f3-cron/issues",
-                "source": "https://github.com/xfra35/f3-cron/tree/v1.2.1"
+                "source": "https://github.com/xfra35/f3-cron/tree/v1.3.0"
             },
-            "time": "2018-06-19T08:29:49+00:00"
+            "time": "2025-08-06T15:04:30+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "phpstan/phpstan",
+            "version": "2.1.51",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dc3b523c45e714c70de2ac5113b958223b55dc59",
+                "reference": "dc3b523c45e714c70de2ac5113b958223b55dc59",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
+            "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-04-21T18:22:01+00:00"
+        },
+        {
+            "name": "rector/rector",
+            "version": "2.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rectorphp/rector.git",
+                "reference": "e645b6463c6a88ea5b44b17d3387d35a912c7946"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/e645b6463c6a88ea5b44b17d3387d35a912c7946",
+                "reference": "e645b6463c6a88ea5b44b17d3387d35a912c7946",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0",
+                "phpstan/phpstan": "^2.1.48"
+            },
+            "conflict": {
+                "rector/rector-doctrine": "*",
+                "rector/rector-downgrade-php": "*",
+                "rector/rector-phpunit": "*",
+                "rector/rector-symfony": "*"
+            },
+            "suggest": {
+                "ext-dom": "To manipulate phpunit.xml via the custom-rule command"
+            },
+            "bin": [
+                "bin/rector"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Instant Upgrade and Automated Refactoring of any PHP code",
+            "homepage": "https://getrector.com/",
+            "keywords": [
+                "automation",
+                "dev",
+                "migration",
+                "refactoring"
+            ],
+            "support": {
+                "issues": "https://github.com/rectorphp/rector/issues",
+                "source": "https://github.com/rectorphp/rector/tree/2.4.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-04-16T13:07:34+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }

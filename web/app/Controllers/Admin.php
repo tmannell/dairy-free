@@ -6,7 +6,7 @@
 class Admin extends Main {
 
   /**
-   * Paginator positoin.
+   * Paginator position.
    *
    * @var int|mixed
    */
@@ -14,7 +14,7 @@ class Admin extends Main {
 
   /**
    * Content filter.
-   * @var
+   * @var array|null
    */
   protected $filter;
 
@@ -130,6 +130,9 @@ class Admin extends Main {
     // tag is used.
     $count = [];
     foreach ($page['subset'] as $tag) {
+      if (!isset($count[$tag->get('tag')])) {
+        $count[$tag->get('tag')] = 0;
+      }
       $count[$tag->get('tag')]++;
     }
 

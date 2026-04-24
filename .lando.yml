@@ -1,7 +1,9 @@
-name: dairy-free
+name: dairyfree
 recipe: lamp
 config:
-  php: '7.4'
+  php: '8.3'
   webroot: web
-  database: mariadb
+  database: mariadb:11.8
   xdebug: true
+
+
