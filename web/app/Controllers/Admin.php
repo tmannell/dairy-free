@@ -6,7 +6,7 @@
 class Admin extends Main {
 
   /**
-   * Paginator positoin.
+   * Paginator position.
    *
    * @var int|mixed
    */
@@ -14,7 +14,7 @@ class Admin extends Main {
 
   /**
    * Content filter.
-   * @var
+   * @var array|null
    */
   protected $filter;
 

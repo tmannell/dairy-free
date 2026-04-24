@@ -6,7 +6,7 @@
 Class User extends Main {
 
   /**
-   * @var \User
+   * @var \Users
    *  User Obj.
    */
   private $user;
@@ -288,7 +288,7 @@ Class User extends Main {
    *  Username retrieved from form
    * @param $password
    *  Password retrieved from form.
-   * @return bool
+   * @return string|false
    *  returns password hash if correct otherwise returns false.
    *
    */

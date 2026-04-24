@@ -2,10 +2,12 @@
 
 /**
  * Class Tags
+ *
+ * @property mixed $tag
  */
 class Tags extends \DB\SQL\Mapper {
 
-  /**
+    /**
    * Tags constructor.
    */
   public function __construct() {
