@@ -2,9 +2,9 @@
 
 A dairy-free CMS for those sensitive to lactose. Publish one image per day, an online endurance art piece.
 
-What to post? A photo, a drawing, your aunt, or what you ate for dinner last night.
+What to post? A photo, a drawing, your aunt, or what you ate for dinner last night. 
 
-Built this for me, but it could be useful for you: customizable, simple, predictable, and easy to post from anywhere.
+Built for me, but it could be useful for you: customizable, simple, predictable, and easy to post from anywhere.
 
 ## Features
 
