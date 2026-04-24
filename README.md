@@ -18,14 +18,14 @@ Built for me, but it could be useful for you: customizable, simple, predictable,
 
 ## Stack
 
-- PHP (Fat-Free Framework)
+- PHP 8.3 (Fat-Free Framework)
 - MariaDB
 - F3 templating
-- Bootstrap 4
+- Bootstrap 5
 
 ## Requirements
 
-- PHP 7.4+
+- PHP 8.3+
 - MariaDB 10+
 - Composer
 - Lando
@@ -48,3 +48,14 @@ Open the app using the provided URL (e.g. http://dairy-free.lndo.site)
 - On first run, navigate to `/install` to set up the database and create an admin account
 - Log in and use the admin interface to upload an image and add a caption
 - Set a publish date (defaults to today, or schedule ahead)
+
+## Contributing
+
+- Branch off `main`
+- Name branches `feature/`, `fix/`, or `chore/`
+- PR back to `main` with a clear description
+- Test coverage in progress
+
+## Roadmap
+
+See [milestones](../../milestones) for planned work.

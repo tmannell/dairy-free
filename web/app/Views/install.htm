@@ -1,13 +1,11 @@
 <include href="app/Views/header.htm" />
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-12 text-center">
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6">
       <div class="intro">
         Install Dairy-Free..
       </div>
-    </div>
-    <div class="col-md-4 col-8 center-form">
       {{ $form->open_multipart('install_form', 'install_form') }}
       <fieldset>
         {{ @form->text('username', 'Admin Username') }}
@@ -16,8 +14,8 @@
         {{ @form->text('database_name', 'Database Name') }}
       </fieldset>
       <div class="row">
-        <div class="col-3">
-          <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block bg-light l-btn">
+        <div class="col-4">
+          <button type="submit" name="submit" id="submit" class="btn btn-light w-100">
             Install
           </button>
         </div>

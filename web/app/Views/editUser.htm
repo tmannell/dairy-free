@@ -1,9 +1,9 @@
 <include href="app/Views/header.htm" />
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-12 col-12 center-form">
-      <div class="text-center">Editing user <strong>{{ @viewed_user_id }}</strong></div>
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6">
+      <h5 class="text-center">Editing user <strong>{{ @viewed_user_id }}</strong></h5>
       {{ @form->open_multipart('user_edit') }}
       <fieldset>
         {{ @form->text('username', 'Username', @viewed_username) }}
@@ -11,13 +11,13 @@
         {{ @form->password('password2', 'Re-enter Password') }}
       </fieldset>
       <div class="row">
-        <div class="col-3">
-          <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block bg-light l-btn">
+        <div class="col-4">
+          <button type="submit" name="submit" id="submit" class="btn btn-light w-100">
             Save
           </button>
         </div>
         <div class="col-4">
-          <a class="btn btn-primary btn-lg btn-block bg-light l-btn" href="/admin/users">Cancel</a>
+          <a class="btn btn-light w-100" href="/admin/users">Cancel</a>
         </div>
       </div>
       {{ @form->close() }}
