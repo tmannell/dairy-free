@@ -167,14 +167,14 @@ input[name="page_media"] {
 #picture
 {
 	margin: 10px 0;
-	display:block;
+	display: block;
 }
 
 #title
 {
-	margin:20px auto 57px;
-	display:block;
-	text-align:center;
+	margin: 20px auto 57px;
+	display: block;
+	text-align: center;
 }
 
 #title div {
