@@ -5,7 +5,7 @@
     <div class="col-lg-6 col-md-8">
       {{ @form->open_multipart('edit_page', 'edit_page') }}
         <fieldset>
-          <h4 class="form-header text-left">Content</h4>
+          <h4 class="form-header">Content</h4>
           {{ @form->textarea('page_title', 'Title', @defaults['title']) }}
           {{ @form->file('page_image', 'Update Image (' . @defaults['filename'] . ')') }}
           {{ @form->date('publish_date', 'Publish Date', @defaults['publish_date']) }}
@@ -16,7 +16,7 @@
           </div>
         </fieldset>
         <fieldset>
-          <h4 class="form-header text-left">Linked Media</h4>
+          <h4 class="form-header">Linked Media</h4>
             {{ @form->select('media_type', 'Media Type', @defaults['media_type'], '', '', '', '', @media_options) }}
             <div id="page-link">
               {{ @form->text('page_link', 'Link', @defaults['page_link']) }}
@@ -24,8 +24,8 @@
             {{ @form->file('page_media', 'Update mp3 (' . @defaults['media'] . ')') }}
         </fieldset>
         <fieldset>
-          <h4 class="form-header text-left">Tags</h4>
-          <check if="{{ isset(@default['tags']) }}">
+          <h4 class="form-header">Tags</h4>
+          <check if="{{ isset(@defaults['tags']) }}">
             <true>
               {{ @form->text('tags', 'Tags', @defaults['tags'], '', '', 'Separate multiple tags with a comma.') }}
             </true>
