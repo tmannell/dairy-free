@@ -21,7 +21,7 @@
             <div id="page-link">
               {{ @form->text('page_link', 'Link', @defaults['page_link']) }}
             </div>
-            {{ @form->file('page_media', 'Update mp3 (' . $defaults['media'] . ')') }}
+            {{ @form->file('page_media', 'Update mp3 (' . @defaults['media'] . ')') }}
         </fieldset>
         <fieldset>
           <h4 class="form-header text-left">Tags</h4>
