@@ -5,6 +5,6 @@ parameters:
         - web/lib
     excludePaths:
         - web/app/Views
-    phpVersion: 80300
+    phpVersion: 80500
     bootstrapFiles:
         - vendor/autoload.php
