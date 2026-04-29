@@ -1,6 +1,6 @@
 {
     "require": {
-        "php": ">=8.3",
+        "php": ">=8.5",
         "bcosca/fatfree-core": "^3.8.0",
         "twbs/bootstrap": "^5.0",
         "components/jquery": "^3.2",
