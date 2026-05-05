@@ -10,7 +10,8 @@
     },
     "require-dev": {
         "rector/rector": "^2.0",
-        "phpstan/phpstan": "^2.0"
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^13.1"
     },
     "scripts": {
         "post-install-cmd": [

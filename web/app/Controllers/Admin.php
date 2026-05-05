@@ -10,13 +10,13 @@ class Admin extends Main {
    *
    * @var int|mixed
    */
-  protected $position;
+  protected mixed $position;
 
   /**
    * Content filter.
    * @var array|null
    */
-  protected $filter;
+  protected ?array $filter;
 
   /**
    * Admin constructor.
@@ -28,6 +28,8 @@ class Admin extends Main {
 
   /**
    * Displays a list of page content with info and actions.
+   *
+   * @throws Exception
    */
   public function content() {
     // Define limit per page.
@@ -95,6 +97,8 @@ class Admin extends Main {
 
   /**
    * Builds a list of tags with actions.
+   *
+   * @throws Exception
    */
   public function tags() {
     // Define limit

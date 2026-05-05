@@ -32,6 +32,9 @@ web/assets/js/bootstrap.bundle.min.js
 import/
 backups/
 
+# PHPUnit
+.phpunit.result.cache
+
 # AI context
 CLAUDE.md
 context/

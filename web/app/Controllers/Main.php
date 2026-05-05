@@ -34,11 +34,14 @@ class Main {
     $this->f3 = Base::instance();
 
     // Initiate the database/
-    $this->db = new \DB\SQL(
-        $this->f3->get('database'),
-        $this->f3->get('username'),
-        $this->f3->get('password')
-    );
+    if (!$this->f3->get('DB')) {
+      $this->f3->set('DB', new \DB\SQL(
+          $this->f3->get('database'),
+          $this->f3->get('username'),
+          $this->f3->get('password')
+      ));
+    }
+    $this->db = $this->f3->get('DB');
   }
 
   /**

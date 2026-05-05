@@ -23,11 +23,14 @@ class CronJobs {
     $this->f3 = Base::instance();
 
     // Initiate the database/
-    $this->db = new \DB\SQL(
-      $this->f3->get('database'),
-      $this->f3->get('username'),
-      $this->f3->get('password')
-    );
+    if (!$this->f3->get('DB')) {
+      $this->f3->set('DB', new \DB\SQL(
+        $this->f3->get('database'),
+        $this->f3->get('username'),
+        $this->f3->get('password')
+      ));
+    }
+    $this->db = $this->f3->get('DB');
   }
 
   /**
@@ -41,13 +44,9 @@ class CronJobs {
     // published date that is equal or less than today.
     $this->db->exec("
       UPDATE pictures 
-      
       SET is_published = 1
-
       WHERE is_published = 0
-        
-        AND publish_date <= :current_date 
-    ", [':current_date' => $current_date->format('Y-m-d')]);
+        AND publish_date <= :current_date", [':current_date' => $current_date->format('Y-m-d')]);
   }
 
 }
