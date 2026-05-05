@@ -27,11 +27,14 @@ class Pages extends \DB\SQL\Mapper {
     $f3 = Base::instance();
 
     // Connect to the database.
-    $this->db = new \DB\SQL(
-      $f3->get('database'),
-      $f3->get('username'),
-      $f3->get('password')
-    );
+    $this->db = $f3->get('DB');
+    if (!$this->db) {
+      $this->db = new \DB\SQL(
+        $f3->get('database'),
+        $f3->get('username'),
+        $f3->get('password')
+      );
+    }
 
     // Create a where statement chunk, whether a user can view published
     // or unpublished pages differs between roles.

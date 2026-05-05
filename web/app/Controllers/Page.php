@@ -671,7 +671,7 @@ class Page extends Main {
    * @param $tag_string
    * @param $picture_id
    */
-  protected function saveTags($tag_string, $picture_id) {
+  protected function saveTags($tag_string, $picture_id): void {
 
     // Get all the tags in the database for this picture
     $tag_mapper = new Tags();

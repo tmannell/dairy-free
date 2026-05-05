@@ -23,15 +23,15 @@ Class Helper extends Main
     // If the key is null return all path components
     if (is_null($key)) {
       $args = explode('/', $path);
+
+      // Remove empty values
+      $args = array_filter($args, function ($value) {
+        return $value !== '';
+      });
     } // If key isn't null return the element of the path the key represents.
     else {
       $args = explode('/', $path)[$key];
     }
-
-    // Remove empty values
-    $args = array_filter($args, function ($value) {
-      return $value !== '';
-    });
 
     // Return cleaned array.
     return $args;
