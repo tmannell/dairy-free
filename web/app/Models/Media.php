@@ -13,11 +13,14 @@ class Media extends \DB\SQL\Mapper {
     $f3 = Base::instance();
 
     // Connect to the database.
-    $db = new \DB\SQL(
-      $f3->get('database'),
-      $f3->get('username'),
-      $f3->get('password')
-    );
+    $db = $f3->get('DB');
+    if (!$db) {
+      $db = new \DB\SQL(
+        $f3->get('database'),
+        $f3->get('username'),
+        $f3->get('password')
+      );
+    }
 
     // Initiate the mapper.
     parent::__construct($db, 'media');

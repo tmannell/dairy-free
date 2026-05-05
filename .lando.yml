@@ -6,4 +6,12 @@ config:
   database: mariadb:11.8
   xdebug: true
 
+services:
+  testdb:
+    type: mariadb:11.8
+    creds:
+      user: dairyfree_test
+      password: dairyfree_test
+      database: dairyfree_test
+
 
