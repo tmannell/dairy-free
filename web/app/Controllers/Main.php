@@ -6,7 +6,7 @@
 class Main {
 
   /**
-   * @var static
+   * @var \Base
    *  Base instance of fat-free.
    */
   protected $f3;
@@ -18,7 +18,7 @@ class Main {
 
   /**
    * Current user id.
-   * @var
+   * @var int
    */
   protected $uid;
 
@@ -34,11 +34,14 @@ class Main {
     $this->f3 = Base::instance();
 
     // Initiate the database/
-    $this->db = new \DB\SQL(
-        $this->f3->get('database'),
-        $this->f3->get('username'),
-        $this->f3->get('password')
-    );
+    if (!$this->f3->get('DB')) {
+      $this->f3->set('DB', new \DB\SQL(
+          $this->f3->get('database'),
+          $this->f3->get('username'),
+          $this->f3->get('password')
+      ));
+    }
+    $this->db = $this->f3->get('DB');
   }
 
   /**
@@ -47,6 +50,7 @@ class Main {
   public function afterroute() {
     // Clear SESSION.<msg>
     $this->f3->clear('SESSION.message');
+    $this->f3->clear('SESSION.formr_errors');
   }
 
   /**
@@ -75,7 +79,7 @@ class Main {
       new \DB\SQL\Session($this->db, 'sessions', TRUE);
     }
     // Otherwise go to the install path.
-    elseif (empty($result) && $this->f3->get('PATH') !== '/install') {
+    elseif ($this->f3->get('PATH') !== '/install') {
       $this->f3->reroute('/install');
     }
   }

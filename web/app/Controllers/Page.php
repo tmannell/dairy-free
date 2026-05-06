@@ -6,12 +6,12 @@
 class Page extends Main {
 
   /**
-   * @var
+   * @var int
    */
   protected $pid;
 
   /**
-   * @var
+   * @var \Pages
    */
   protected $page;
 
@@ -135,7 +135,7 @@ class Page extends Main {
       if ($valid === true) {
         // Save the submission.
         $picture_id = $this->create($form, $data, $files);
-        // Creation successfull, redirect.
+        // Creation successful, redirect.
         if ($picture_id) {
           // Set display message.
           $this->f3->set('SESSION.message.type', 'alert-success');
@@ -210,7 +210,7 @@ class Page extends Main {
       }
 
       // Validate the submission.
-      $valid = $this->validateForm($form, $data, $files, 'update');
+      $valid = $this->validateForm($form, $data, $files, 'update', $defaults);
       if ($valid === true) {
         // Update the page.
         $picture_id = $this->update($form, $data, $files);
@@ -277,6 +277,8 @@ class Page extends Main {
     $defaults['title'] = $this->page->get('title');
     $defaults['publish_date'] = $this->page->get('publish_date');
     $defaults['media_type'] = $this->page->get('media_type');
+    $defaults['filename'] = $this->page->get('filename');
+    $defaults['media'] = $this->page->get('media');
 
     // Set created date default.
     $created_date = new DateTime($this->page->get('created_date'));
@@ -324,7 +326,7 @@ class Page extends Main {
    * @return bool
    * @throws \Exception
    */
-  protected function validateForm($form, $data, $files, $op) {
+  protected function validateForm($form, $data, $files, $op, $defaults = null) {
 
     // Check if required field page_image was actually uploaded.
     if ($op === 'create' && !isset($files['page_image']['name'])) {
@@ -332,7 +334,7 @@ class Page extends Main {
     }
 
     // Validate file types.
-    if ($op === 'create' || ($op === 'update' && isset($files['page_image']['name']))) {
+    if (isset($files['page_image']['type'])) {
       if (!in_array($files['page_image']['type'], [
         'image/jpeg',
         'image/png',
@@ -342,12 +344,24 @@ class Page extends Main {
       }
     }
 
-    // Only run this validation if the conditions are right.
-    if ($op == 'create' || $op === 'update' && isset($files['page_media']['name'])) {
-      // Media file type.
-      if ($data['media_type'] === 'audio'
-          && $files['page_media']['type'] !== 'audio/mpeg') {
+    // On create - media type is audio but there's no file.
+    if ($op === 'create' && $data['media_type'] === 'audio' && !isset($files['page_media'])) {
+      $form->add_to_errors('audio_missing');
+    }
 
+    // On update - media type is audio but there's no file.
+    if (
+        $op === 'update'
+        && $data['media_type'] === 'audio'
+        && $defaults['media_type'] !== 'audio'
+        && !isset($files['page_media']['name'])
+    ) {
+      $form->add_to_errors('audio_missing');
+    }
+    // Media type is audio but wrong file type.
+    if ($data['media_type'] === 'audio' && isset($files['page_media'])) {
+
+      if ($files['page_media']['type'] !== 'audio/mpeg') {
         $form->add_to_errors('page_media');
       }
 
@@ -367,36 +381,29 @@ class Page extends Main {
       }
     }
 
-    // Again only run this validation if the conditions are right.
-    if ($op == 'create' || $op === 'update' && isset($files['page_media']['name'])) {
-
-      // Has a file been uploaded?
-      if ($data['media_type'] === 'audio' && trim($files['page_media']['name']) === '') {
-          $form->add_to_errors('audio_empty');
-      }
-    }
-
     // Check for errors and print messages.
     if ($form->errors()) {
-
+      $errors = [];
       if ($form->in_errors('page_image')) {
-        $form->error_message('File missing or incorrect image file type. Allowed file types <em>jpg, png, gif</em>');
+        $errors[] = "File missing or incorrect image file type. Allowed file types jpg, png, gif";
       }
       if ($form->in_errors('page_media')) {
-        $form->error_message('Incorrect audio file type. Allowed file types <em>mp3</em>');
+        $errors[] = "Incorrect audio file type. Allowed file types mp3";
       }
       if ($form->in_errors('publish_date')) {
-        $form->error_message('Publish date is in the incorrect format.');
+        $errors[] = 'Publish date is in the incorrect format.';
       }
       if ($form->in_errors('created_date')) {
-        $form->error_message('Date created is in the incorrect format.');
+        $errors[] = 'Date created is in the incorrect format.';
       }
       if ($form->in_errors('link_empty')) {
-        $form->error_message('Missing media link.');
+        $errors[] = 'Missings media link.';
       }
-      if ($form->in_errors('audio_image')) {
-        $form->error_message('Missing audio file.');
+      if ($form->in_errors('audio_missing')) {
+        $errors[] = 'Missing audio file.';
       }
+
+      $this->f3->set('SESSION.formr_errors', $errors);
 
       return false;
     }
@@ -411,11 +418,10 @@ class Page extends Main {
    * @param $data
    * @param $files
    *
-   * @return false
+   * @return int|false
    */
   protected function create($form, $data, $files) {
     // Save the files before writing to the database.
-
     $img_filename = $this->saveFile($files['page_image'], 'pictures');
     if (!$img_filename) {
       $form->error_message('Failed to upload image file.');
@@ -423,6 +429,7 @@ class Page extends Main {
     }
 
     // Save audio file if necessary
+    $audio_filename = null;
     if ($data['media_type'] === 'audio' && isset($files['page_media']['name'])) {
       $audio_filename = $this->saveFile($files['page_media'], 'audio');
       if (!$audio_filename) {
@@ -446,13 +453,15 @@ class Page extends Main {
     $picture = $picture->save();
 
     // Now let's save the media entity.
-    $media_content = $data['media_type'] === 'link' ? $data['page_link'] : $audio_filename;
+    if ($data['media_type'] !== '') {
+      $media_content = $data['media_type'] === 'link' ? $data['page_link'] : $audio_filename;
 
-    $media = new Media();
-    $media->set('media_type', $data['media_type']);
-    $media->set('media', $media_content);
-    $media->set('picture_id', $picture->id);
-    $media->save();
+      $media = new Media();
+      $media->set('media_type', $data['media_type']);
+      $media->set('media', $media_content);
+      $media->set('picture_id', $picture->id);
+      $media->save();
+    }
 
     // Save the tags to the database.
     if (trim($data['tags']) !== '') {
@@ -481,7 +490,7 @@ class Page extends Main {
    * @param $data
    * @param $files
    *
-   * @return false
+   * @return false|int
    * @throws \Exception
    */
   protected function update($form, $data, $files) {
@@ -536,26 +545,42 @@ class Page extends Main {
     $picture->set('created_date', $created_date);
     $picture = $picture->save();
 
-    $media_mapper = new Media();
-    $media = $media_mapper->load(['picture_id = ?', $this->pid]);
+    // Let's manage the media type now. There's two option Link and Audio.
+    // If one is selected, let's see if it's already in the database and just needs updating.
+    if ($data['media_type'] != '') {
+      $media_mapper = new Media();
+      $media = $media_mapper->load(['picture_id = ?', $this->pid]);
 
-    // If we can't find the media return false;
-    if (!$media) {
-      return false;
+      // If we can't find an existing media make a new one.
+      if (!$media) {
+        $media = $media_mapper;
+      }
+
+      // If it's a page link use that form data.
+      if ($data['media_type'] === 'link') {
+        $media->set('media', $data['page_link']);
+      }
+      else {
+        if (isset($audio_filename)) {
+          $media->set('media', $audio_filename);
+        }
+      }
+
+      // Let's set the fields that are common to both tyles.
+      $media->set('media_type', $data['media_type']);
+      $media->set('picture_id', $picture->id);
+      $media->save();
     }
+    // If we're removing media, clear the DB.
+    else {
+      $media_mapper = new Media();
+      $media = $media_mapper->load(['picture_id = ?', $this->pid]);
 
-    $media->set('media_type', $data['media_type']);
-
-    // Now let's save the media entity.
-    if ($data['media_type'] === 'link') {
-      $media->set('media', $data['page_link']);
+      // Only erase it if it exists.
+      if ($media) {
+        $media_mapper->erase();
+      }
     }
-    elseif($data['media_type'] === 'audio' && isset($audio_filename)) {
-      $media->set('media', $audio_filename);
-    }
-
-    $media->set('picture_id', $picture->id);
-    $media->save();
 
     // Save tags.
     $this->saveTags($data['tags'], $picture->id);
@@ -578,7 +603,7 @@ class Page extends Main {
     // as possible.
     $img_filename = strtolower($file['name']);
     $img_filename = str_replace(' ', '_', $img_filename);
-    $hash = hash('crc32', rand(0, 10000000));
+    $hash = hash('crc32', (string) rand(0, 10000000));
     $img_filename = $hash . '__' . $img_filename;
 
     // Save the image file.
@@ -597,7 +622,7 @@ class Page extends Main {
     $args = Helper::explodePath();
     // If argument two is numeric and argument one is 'page,
     // we are doing something with a page.
-    if (is_numeric($args[2]) && strtolower($args[1]) === 'page') {
+    if (count($args) >= 2 && is_numeric($args[2]) && strtolower($args[1]) === 'page') {
       // Store page id from URL.
       $this->pid = $args[2];
       // Load the pages mapper.
@@ -646,7 +671,7 @@ class Page extends Main {
    * @param $tag_string
    * @param $picture_id
    */
-  protected function saveTags($tag_string, $picture_id) {
+  protected function saveTags($tag_string, $picture_id): void {
 
     // Get all the tags in the database for this picture
     $tag_mapper = new Tags();
@@ -684,7 +709,7 @@ class Page extends Main {
       }
     }
     // No tags submitted but there's some in the db.
-    elseif (trim($tag_string) === '' && !$tag_mapper->dry()) {
+    else {
       // Erase all tags in the db for this picture
       while (!$tag_mapper->dry()) {
         $tag_mapper->erase();

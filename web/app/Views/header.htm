@@ -1,37 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>{{ @site_title }}</title>
 
-    <meta property="og:title" content="{{ @title }}">
-    <meta property="og:site_name" content="Dairy-Free">
-    <meta property="og:image" content="http://dairy-free.net/assets/images/banner.jpg">
-    <meta property="og:description" content="{{ @site_description }}">
-    <meta property="og:url" content="https://dairy-free.net">
+    <check if="{{ isset(@title) }}">
+      <true>
+        <meta property="og:title" content="{{ @title }}">
+      </true>
+      <false>
+        <meta property="og:title" content="{{ @site_title }}">
+      </false>
+    </check>
 
-    <meta name="description" content="Dairy-Free - Daily Web Comic for the weak of stomach.">
-    <meta name="generator" content="Dairy-Freeed Stuff">
-    <meta name="keywords" content="dairy-free, web comic, lactose intolerance, sketch, drawing, artists">
-    <meta name="author" content="Dairy-Free">
-    <meta name="created" content="July 11, 2011">
-    <meta name="changed" content="December 19, 2020">
+    <meta property="og:site_name" content="{{ @site_title }}">
+    <meta property="og:image" content="assets/svg/header-dairy-free.svg">
+    <meta property="og:description" content="{{ @site_description }}">
+    <meta property="og:url" content="{{ @site_url }}">
+
+    <meta name="description" content="{{ @site_description }}">
 
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/display.css">
-    <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/assets/svg/favicon.svg">
 
   </head>
   <body>
+    <include href="assets/svg/icons.svg" />
     <div class="d-flex flex-column min-vh-100">
 
       <check if ="{{ isset(@SESSION.uid) }}">
         <true>
           <include href="app/Views/adminBar.htm" />
+          <include href="app/Views/navBar.htm" />
         </true>
       </check>
       <div class="main flex-fill">

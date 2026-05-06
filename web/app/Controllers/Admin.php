@@ -6,17 +6,17 @@
 class Admin extends Main {
 
   /**
-   * Paginator positoin.
+   * Paginator position.
    *
    * @var int|mixed
    */
-  protected $position;
+  protected mixed $position;
 
   /**
    * Content filter.
-   * @var
+   * @var array|null
    */
-  protected $filter;
+  protected ?array $filter;
 
   /**
    * Admin constructor.
@@ -28,6 +28,8 @@ class Admin extends Main {
 
   /**
    * Displays a list of page content with info and actions.
+   *
+   * @throws Exception
    */
   public function content() {
     // Define limit per page.
@@ -95,6 +97,8 @@ class Admin extends Main {
 
   /**
    * Builds a list of tags with actions.
+   *
+   * @throws Exception
    */
   public function tags() {
     // Define limit
@@ -130,6 +134,9 @@ class Admin extends Main {
     // tag is used.
     $count = [];
     foreach ($page['subset'] as $tag) {
+      if (!isset($count[$tag->get('tag')])) {
+        $count[$tag->get('tag')] = 0;
+      }
       $count[$tag->get('tag')]++;
     }
 

@@ -2,7 +2,7 @@
 
 A dairy-free CMS for those sensitive to lactose. Publish one image per day, an online endurance art piece.
 
-What to post? A photo, a drawing, your aunt, or what you ate for dinner last night. 
+What to post? A photo, a drawing, your aunt, or what you ate for dinner last night.
 
 Built for me, but it could be useful for you: customizable, simple, predictable, and easy to post from anywhere.
 
@@ -12,26 +12,26 @@ Built for me, but it could be useful for you: customizable, simple, predictable,
 - Set publish dates in the future (work ahead)
 - Simple admin workflow for uploads and captions
 - Chronological archive of entries
+- Tag-based grouping and navigation
+- Auto-publish scheduled posts via cron
 - Customizable look and feel
 - Minimal dependencies and straightforward data model
-- Server-rendered (no frontend build step)
 
 ## Stack
 
-- PHP (Fat-Free Framework)
+- PHP 8.5 (Fat-Free Framework v3.8)
 - MariaDB
 - F3 templating
-- Bootstrap 4
+- Bootstrap 5
 
 ## Requirements
 
-- PHP 7.4+
+- PHP 8.5+
 - MariaDB 10+
 - Composer
-- Lando
+- Lando (for local development)
 
 ## Local Setup
-
 ```bash
 git clone git@github.com:tmannell/dairy-free.git
 cd dairy-free
@@ -41,10 +41,19 @@ cp config.ini.example config.ini
 # edit config.ini with your database credentials
 ```
 
-Open the app using the provided URL (e.g. http://dairy-free.lndo.site)
+Open the app using the provided Lando URL (e.g. https://dairyfree.lndo.site)
 
-## Usage
+## Docs
 
-- On first run, navigate to `/install` to set up the database and create an admin account
-- Log in and use the admin interface to upload an image and add a caption
-- Set a publish date (defaults to today, or schedule ahead)
+- [Setup](docs/setup.md) — local and production setup
+
+## Contributing
+
+- Branch off `main`
+- Name branches `feature/`, `bug/`, or `maintenance/`
+- PR back to `main` with a clear description — all PRs require review and approval before merging
+- PHPUnit test suite — run with `lando php vendor/bin/phpunit`
+
+## Roadmap
+
+See [milestones](../../milestones) for planned work.

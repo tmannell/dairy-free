@@ -5,7 +5,16 @@
     </div>
   </true>
 </check>
-<check if="{{ @unpublished === 1 }}">
+<check if="{{ isset(@SESSION['formr_errors']) }}">
+  <true>
+    <repeat group="{{ @SESSION['formr_errors'] }}" value="{{ @error }}">
+      <div class="alert alert-danger" role="alert">
+        {{ @error }}
+      </div>
+    </repeat>
+  </true>
+</check>
+<check if="{{ isset(@unpublished) && @unpublished === 1 }}">
   <true>
     <div class="alert alert-danger" role="alert">
       This page is currently unpublished.

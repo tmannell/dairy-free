@@ -1,0 +1,10 @@
+parameters:
+    level: 5
+    paths:
+        - web/app
+        - web/lib
+    excludePaths:
+        - web/app/Views
+    phpVersion: 80500
+    bootstrapFiles:
+        - vendor/autoload.php

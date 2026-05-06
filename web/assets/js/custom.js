@@ -23,15 +23,18 @@ function addPageConditionals(media_type) {
     if (media_type.val() === 'link') {
         $('#page-link').show()
         $('input[name="page_media"]').hide()
+        $('label[for="page_media"]').hide()
     }
 
     if (media_type.val() === 'audio') {
         $('input[name="page_media"]').show()
+        $('label[for="page_media"]').show()
         $('#page-link').hide()
     }
 
     if (media_type.val() === '0') {
         $('input[name="page_media"]').hide()
+        $('label[for="page_media"]').hide()
         $('#page-link').hide()
     }
 }

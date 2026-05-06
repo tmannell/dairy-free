@@ -15,7 +15,6 @@ web/assets/comics/
 !web/assets/pictures
 web/assets/pictures/*
 web/assets/cufon-yui.js
-web/assets/font/
 web/tmp/*
 vendor/
 .idea/
@@ -28,4 +27,13 @@ web/assets/css/font-awesome.min.css
 web/assets/js/jquery.min.js
 web/assets/js/bootstrap.min.js
 web/assets/js/bootstrap.min.js.map
+web/assets/js/bootstrap.bundle.min.js
 import/
+backups/
+
+# PHPUnit
+.phpunit.result.cache
+
+# AI context
+CLAUDE.md
+context/
