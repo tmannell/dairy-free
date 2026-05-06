@@ -10,18 +10,17 @@ a:hover {
 }
 
 @font-face {
-	font-family: 'peacerfuldayregular';
-	src: url('../font/peacefulday-webfont.woff2') format('woff2'),
-	url('../font/peacefulday-webfont.woff') format('woff');
-	font-weight: normal;
+	font-family: 'Fredoka';
+	src: url('../font/fredoka.woff2') format('woff2');
+	font-weight: 100 900;
 	font-style: normal;
+	font-display: swap;
 }
 
 body {
 	font-size: 15px !important;
-	font-family: 'peacerfuldayregular', Arial, sans-serif !important;
-	font-weight:normal !important;
-	font-style:normal !important;
+	font-family: 'Fredoka', Arial, sans-serif !important;
+	font-weight: 400 !important;
 	background-color: #FFF;
 }
 
@@ -40,7 +39,7 @@ body {
 
 /* navbar */
 #admin-bar {
-	margin-bottom: 5px;
+	margin-bottom: 40px;
 }
 #nav-logout {
 	margin-right: 20px;
@@ -58,7 +57,7 @@ body {
 
 /* Footer */
 .footer {
-	margin: 50px 0 20px 0;
+	margin: 0 0 20px 0;
 	font-size: 11px;
 }
 
@@ -67,14 +66,6 @@ body {
 }
 
 
-#name{
-	width: 320px;
-	height: 100px;
-}
-
-.site-title .navbar-brand {
-	margin-right: auto !important;
-}
 
 /* Forms */
 
@@ -157,11 +148,23 @@ input[name="page_media"] {
 	color: #7a3b0e !important;
 }
 
-#header
-{
-	margin:0 auto 50px;
-	display:block;
-	text-align:center;
+.site-title {
+	font-family: 'Fredoka', sans-serif;
+	font-weight: 700;
+	font-size: 4rem;
+	color: #141719;
+	letter-spacing: -1px;
+	line-height: 1;
+}
+
+.subtitle {
+	font-family: 'Fredoka', sans-serif;
+	font-weight: 400;
+	font-size: 0.9rem;
+	color: #141719;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	margin-top: 0.25rem;
 }
 
 #picture
@@ -172,7 +175,7 @@ input[name="page_media"] {
 
 #title
 {
-	margin: 20px auto 57px;
+	margin: 20px auto 40px;
 	display: block;
 	text-align: center;
 }
@@ -185,9 +188,8 @@ input[name="page_media"] {
 
 #action-items
 {
-	margin-bottom:75px;
-	font-size:12px;
-	color:grey;
+	font-size: 12px;
+	color: #141719;
 }
 
 #date{
@@ -196,7 +198,7 @@ input[name="page_media"] {
 
 #audio-player{
 	display: none;
-	margin: -42px auto 20px;
+	margin: -18px auto 20px;
 	text-align: center;
 	width: 156px;
 }
@@ -207,11 +209,16 @@ input[name="page_media"] {
 #next,
 #last,
 #link,
-#listen,
-#random
+#listen
 {
 	text-align:center;
 	display:block;
+	color: #141719;
+}
+
+.icon {
+	width: 50px;
+	height: 50px;
 }
 
 #media-col,

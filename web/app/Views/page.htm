@@ -7,7 +7,7 @@
 			<check if="{{ @pid != @first }}">
 				<true>
 					<a class="img" id="first" href="{{ @path }}{{ @first }}">
-						<img src="/assets/images/first.jpg" alt="first">
+						<svg class="icon"><use href="#icon-first"/></svg>
 					</a>
 				</true>
 			</check>
@@ -17,7 +17,7 @@
 			<check if="{{ @pid != @first }}">
 				<true>
 					<a class="img" id="previous" href="{{ @path }}{{ @previous }}">
-						<img src="/assets/images/previous.jpg" alt="previous">
+						<svg class="icon"><use href="#icon-previous"/></svg>
 					</a>
 				</true>
 			</check>
@@ -33,7 +33,7 @@
 			<check if="{{ @pid != @last }}">
 				<true>
 					<a class="img" id="next" href="{{ @path }}{{ @next }}">
-						<img src="/assets/images/next.jpg" alt="next">
+						<svg class="icon"><use href="#icon-forward"/></svg>
 					</a>
 				</true>
 			</check>
@@ -43,7 +43,7 @@
 			<check if="{{ @pid != @last }}">
 				<true>
 					<a class="img" id="last" href="{{ @path }}{{ @last }}">
-						<img src="/assets/images/last.jpg" alt="last">
+						<svg class="icon"><use href="#icon-last"/></svg>
 					</a>
 				</true>
 			</check>
@@ -58,7 +58,7 @@
 					<true>
 						<div id="media_type">
 							<a class="img" id="listen" href="#listen">
-								<img src="/assets/images/sound.jpg" alt="sound">
+								<svg class="icon"><use href="#icon-listen"/></svg>
 							</a>
 						</div>
 					</true>
@@ -68,7 +68,7 @@
 					<true>
 						<div id="media-type">
 							<a class="img" id="link" href="{{ @media }}" target="_blank">
-								<img src="/assets/images/visual.jpg" alt="visual">
+								<svg class="icon"><use href="#icon-view"/></svg>
 							</a>
 						</div>
 					</true>
@@ -78,15 +78,7 @@
 				<div>{{ html_entity_decode( @title ) }}</div>
 			</div>
 
-			<div class="col-md-2 col-2" id="random-col">
-<!--				<check if="{{ @count > 1 }}" >-->
-<!--					<true>-->
-<!--						<a class="img" id="random" href="/random">-->
-<!--							<img src="/assets/images/random.png" alt="random">-->
-<!--						</a>-->
-<!--					</true>-->
-<!--				</check>-->
-			</div>
+			<div class="col-md-2 col-2" id="random-col"></div>
 	</div>
 	<div class="row">
 		<div class="col-md-12 col-12 text-center d-block">
@@ -105,13 +97,6 @@
 	<div class="row">
 		<div class="col text-center">
 			<div id="date">{{ @page_date }}</div>
-			<check if="{{ trim(@site_email) !== '' }}" >
-				<true>
-					<a class="img" href="mailto:{{ @site_email }}">
-						<img src="/assets/images/contact.jpg" alt="mailto">
-					</a>
-				</true>
-			</check>
 		</div>
 	</div>
 </div>
