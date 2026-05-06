@@ -46,7 +46,6 @@ Open the app using the provided Lando URL (e.g. https://dairyfree.lndo.site)
 ## Docs
 
 - [Setup](docs/setup.md) — local and production setup
-- [Usage](docs/usage.md) — posting, tags, users, and admin workflow
 
 ## Contributing
 
