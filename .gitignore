@@ -8,7 +8,6 @@
 *.swp
 
 #Speific files and directories
-
 web/favicon.ico
 web/robots.txt
 web/assets/comics/
@@ -33,6 +32,11 @@ backups/
 
 # PHPUnit
 .phpunit.result.cache
+
+# ddev
+/.ddev/*
+!/.ddev/config.yaml
+!/.ddev/nginx_full/
 
 # AI context
 CLAUDE.md
