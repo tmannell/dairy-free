@@ -2,14 +2,12 @@
 
 ## Prerequisites
 
-- [Lando](https://lando.dev) — for local development
+- [DDEV](https://ddev.com) — for local development
 - [Composer](https://getcomposer.org)
 - PHP 8.5+
 - MariaDB 10+
 
----
-
-## Local Development (Lando)
+## Local Development (DDEV)
 
 1. **Clone the repo**
    ```bash
@@ -17,46 +15,54 @@
    cd dairy-free
    ```
 
-2. **Start Lando**
+2. **Start DDEV**
    ```bash
-   lando start
+   ddev start
    ```
-   This spins up PHP 8.5, MariaDB, and a test database container.
-
+   This starts PHP 8.5, MariaDB 11.8 and nginx. A `post-start` hook in `.ddev/config.yaml` creates the `dairyfree_test` database for PHPUnit.
+     
 3. **Install dependencies**
    ```bash
-   lando composer install
+   ddev composer install
    ```
 
 4. **Configure the app**
    ```bash
    cp config.ini.example config.ini
    ```
-   Edit `config.ini` with your local database credentials. The Lando defaults are:
+   Edit `config.ini` with DDEV database defaults.
    ```ini
-   database = "mysql:host=database;port=3306;dbname=lamp"
-   username = "lamp"
-   password = "lamp"
+   database = "mysql:host=db;port=3306;dbname=db"
+   username = "db"
+   password = "db"
    ```
 
 5. **Configure the test database**
-   ```bash
-   cp config.test.ini.example config.test.ini
-   ```
-   The test DB credentials match the `testdb` service in `.lando.yml`.
+   
+   The test config (`config.test.ini`) is committed and points at DDEV.
 
 6. **Install the app**
-   Navigate to `https://dairyfree.lndo.site/install` to create the database schema and admin user.
+   Go to `https://dairy-free.ddev.site/install` to create the database schema and admin user.
 
----
 
 ## Running Tests
 
 ```bash
-lando php vendor/bin/phpunit
+ddev exec php vendor/bin/phpunit
+```
+Run this from project root, because the autoload paths in `config.test.ini` are relative to it.
+
+
+## Debugging (Xdebug)
+
+Xdebug is off by default. Toggle it with `ddev xdebug on` / `ddev xdebug off`, or keep it on locally by adding the following to a git-ignored `.ddev/config.local.yaml`:
+
+```yaml
+xdebug_enabled: true
 ```
 
----
+See the [DDEV step debugging docs](https://docs.ddev.com/en/stable/users/debugging-profiling/step-debugging/) for editor setup.
+
 
 ## Production Setup (LAMP)
 
