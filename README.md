@@ -29,19 +29,19 @@ Built for me, but it could be useful for you: customizable, simple, predictable,
 - PHP 8.5+
 - MariaDB 10+
 - Composer
-- Lando (for local development)
+- [DDEV](https://ddev.com) (for local development; provides PHP, MariaDB and Composer)
 
 ## Local Setup
 ```bash
 git clone git@github.com:tmannell/dairy-free.git
 cd dairy-free
-lando start
-composer install
+ddev start
+ddev composer install
 cp config.ini.example config.ini
-# edit config.ini with your database credentials
+# set host=db, dbname=db, username/password=db
 ```
 
-Open the app using the provided Lando URL (e.g. https://dairyfree.lndo.site)
+Open the app at https://dairy-free.ddev.site
 
 ## Docs
 
@@ -52,7 +52,7 @@ Open the app using the provided Lando URL (e.g. https://dairyfree.lndo.site)
 - Branch off `main`
 - Name branches `feature/`, `bug/`, or `maintenance/`
 - PR back to `main` with a clear description — all PRs require review and approval before merging
-- PHPUnit test suite — run with `lando php vendor/bin/phpunit`
+- PHPUnit test suite — run with `ddev exec vendor/bin/phpunit`
 
 ## Roadmap
 
